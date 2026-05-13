@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visionarios Company — Creación de Páginas Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #05050a;
+  --bg2: #0a0a18;
+  --violet: #7c3aed;
+  --violet2: #9f67ff;
+  --cyan: #00f5ff;
+  --gold: #ffd166;
+  --green: #06d6a0;
+  --white: #f0f0ff;
+  --muted: #6b7280;
+  --border: rgba(124,58,237,0.25);
+  --glow: rgba(124,58,237,0.4);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ─── CURSOR ─── */
+.cursor-dot {
+  width: 8px; height: 8px;
+  background: var(--cyan);
+  border-radius: 50%;
+  position: fixed; z-index: 9999;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width .2s, height .2s, background .2s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  width: 40px; height: 40px;
+  border: 1.5px solid var(--violet2);
+  border-radius: 50%;
+  position: fixed; z-index: 9998;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: left .12s ease-out, top .12s ease-out, width .3s, height .3s, border-color .3s;
+}
+body:has(a:hover, button:hover) .cursor-dot { width: 16px; height: 16px; background: var(--violet2); }
+body:has(a:hover, button:hover) .cursor-ring { width: 60px; height: 60px; border-color: var(--cyan); }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 3rem;
+  background: rgba(5,5,10,0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, var(--violet2), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.nav-logo img {
+  height: 38px;
+  width: auto;
+  display: block;
+  -webkit-text-fill-color: initial;
+  filter: drop-shadow(0 0 6px rgba(124,58,237,0.5));
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 2px;
+  text-transform: uppercase; text-decoration: none; color: var(--muted);
+  transition: color .3s;
+}
+.nav-links a:hover { color: var(--cyan); }
+.nav-cta {
+  padding: 0.6rem 1.5rem;
+  background: linear-gradient(135deg, var(--violet), var(--violet2));
+  color: #fff; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none; border-radius: 6px;
+  box-shadow: 0 0 20px rgba(124,58,237,0.5);
+  transition: box-shadow .3s, transform .2s;
+}
+.nav-cta:hover { box-shadow: 0 0 40px rgba(124,58,237,0.8); transform: translateY(-1px); }
+
+/* ─── HERO 3D SCENE ─── */
+#hero {
+  height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  perspective: 800px;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(124,58,237,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,245,255,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(255,209,102,0.05) 0%, transparent 60%);
+}
+
+/* 3D grid floor */
+.grid-3d {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60%;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.15) 1px, transparent 1px);
+  background-size: 60px 60px;
+  transform: rotateX(60deg) translateY(30%) scaleX(2);
+  transform-origin: bottom center;
+  mask-image: linear-gradient(to top, black 0%, transparent 80%);
+}
+
+.particles {
+  position: absolute; inset: 0; overflow: hidden;
+}
+.particle {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: var(--violet2);
+  border-radius: 50%;
+  animation: float linear infinite;
+  opacity: 0;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-100px) translateX(var(--dx)); opacity: 0; }
+}
+
+.hero-content {
+  position: relative; z-index: 10;
+  text-align: center;
+  transform-style: preserve-3d;
+  animation: heroEntrance 1.2s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes heroEntrance {
+  from { opacity: 0; transform: translateZ(-200px) translateY(50px); }
+  to { opacity: 1; transform: translateZ(0) translateY(0); }
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(124,58,237,0.2);
+  border: 1px solid var(--border);
+  padding: 0.4rem 1.2rem;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--cyan);
+  border-radius: 100px; margin-bottom: 2rem;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(0,245,255,0.2); }
+  50% { box-shadow: 0 0 30px rgba(0,245,255,0.5); }
+}
+.hero-badge::before { content: '◉'; font-size: 0.5rem; color: var(--cyan); animation: spin 3s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -3px;
+  margin-bottom: 2rem;
+  width: 100%;
+  padding: 0 1rem;
+}
+.hero-title .line1 { display: block; color: var(--white); }
+.hero-title .line2 {
+  display: block;
+  background: linear-gradient(90deg, var(--violet2), var(--cyan), var(--violet2));
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer { to { background-position: -200%; } }
+
+.hero-title .line3 {
+  display: block;
+  font-size: 0.35em;
+  font-weight: 400;
+  letter-spacing: 6px;
+  color: var(--muted);
+  text-transform: uppercase;
+  -webkit-text-fill-color: var(--muted);
+  margin-top: 1rem;
+}
+
+.hero-sub {
+  font-size: 1.05rem; font-weight: 300; color: var(--muted);
+  max-width: 500px; margin: 0 auto 3rem; line-height: 1.8;
+}
+
+.hero-btns {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+}
+.btn-primary {
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, var(--violet), var(--violet2));
+  color: #fff; font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; text-decoration: none; border: none;
+  border-radius: 8px; cursor: pointer;
+  box-shadow: 0 0 30px rgba(124,58,237,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+  transition: transform .2s, box-shadow .2s;
+  position: relative; overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15));
+}
+.btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 0 60px rgba(124,58,237,0.8); }
+
+.btn-secondary {
+  padding: 1rem 2.5rem;
+  background: transparent;
+  color: var(--white); font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; text-decoration: none;
+  border: 1px solid var(--border); border-radius: 8px; cursor: pointer;
+  transition: border-color .3s, color .3s, box-shadow .3s;
+}
+.btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 20px rgba(0,245,255,0.2); }
+
+/* Floating 3D Cards in hero */
+.hero-float-cards {
+  position: absolute;
+  inset: 0; pointer-events: none;
+  overflow: hidden;
+}
+.float-card {
+  position: absolute;
+  background: rgba(124,58,237,0.1);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-size: 0.7rem; font-weight: 500;
+  animation: floatCard linear infinite;
+  white-space: nowrap;
+}
+.float-card .fc-icon { font-size: 1rem; margin-right: 0.5rem; }
+.float-card-1 { top: 20%; left: 5%; animation-duration: 12s; animation-delay: 0s; color: var(--cyan); border-color: rgba(0,245,255,0.2); }
+.float-card-2 { top: 40%; right: 5%; animation-duration: 14s; animation-delay: -3s; color: var(--gold); border-color: rgba(255,209,102,0.2); }
+.float-card-3 { top: 65%; left: 8%; animation-duration: 16s; animation-delay: -6s; color: var(--green); border-color: rgba(6,214,160,0.2); }
+.float-card-4 { top: 12%; right: 12%; animation-duration: 11s; animation-delay: -9s; color: var(--violet2); }
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0px) rotateX(5deg) rotateY(-5deg); }
+  25% { transform: translateY(-15px) rotateX(-3deg) rotateY(5deg); }
+  50% { transform: translateY(-8px) rotateX(5deg) rotateY(3deg); }
+  75% { transform: translateY(-20px) rotateX(-5deg) rotateY(-3deg); }
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute; bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  color: var(--muted); font-size: 0.6rem; letter-spacing: 3px;
+  animation: bounceDown 2s ease-in-out infinite;
+}
+@keyframes bounceDown {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+.scroll-arrow { font-size: 1.2rem; color: var(--violet2); }
+
+/* ─── STATS ─── */
+.stats-bar {
+  padding: 2rem 3rem;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; overflow: hidden;
+}
+.stat-item {
+  text-align: center;
+  padding: 1rem 4rem;
+  border-right: 1px solid var(--border);
+  flex: 1;
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  background: linear-gradient(135deg, var(--violet2), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.65rem; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+/* ─── HORIZONTAL SCROLL SECTION (viral effect) ─── */
+.h-scroll-section {
+  position: relative;
+  height: 400vh;
+}
+.h-scroll-sticky {
+  position: sticky;
+  top: 0; height: 100vh;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+.h-scroll-track {
+  display: flex; gap: 3rem;
+  padding: 0 5rem;
+  will-change: transform;
+  transition: transform 0.05s linear;
+}
+.h-card {
+  flex-shrink: 0;
+  width: 380px; height: 480px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transform-style: preserve-3d;
+  transition: transform .4s cubic-bezier(0.16,1,0.3,1), box-shadow .4s;
+}
+.h-card:hover {
+  transform: translateY(-10px) rotateX(5deg) rotateY(-3deg);
+  box-shadow: 0 30px 80px rgba(124,58,237,0.3);
+}
+.h-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.1), transparent 50%);
+  pointer-events: none;
+}
+.h-card-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem; line-height: 1;
+  background: linear-gradient(135deg, var(--border), transparent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: auto;
+}
+.h-card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.h-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem; font-weight: 700;
+  margin-bottom: 0.8rem; line-height: 1.1;
+}
+.h-card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+.h-card-accent {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+}
+
+/* ─── SERVICES 3D GRID ─── */
+.section {
+  padding: 8rem 5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.section-full { padding: 8rem 5rem; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--cyan);
+  margin-bottom: 1.5rem;
+}
+.eyebrow::before { content: '▸'; }
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 800; line-height: 0.95;
+  letter-spacing: -2px; margin-bottom: 1.5rem;
+}
+.section-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--violet2), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+.svc-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s, box-shadow .3s, transform .3s;
+  cursor: pointer;
+}
+.svc-card:hover {
+  border-color: var(--violet2);
+  box-shadow: 0 0 40px rgba(124,58,237,0.2);
+  transform: translateY(-5px);
+}
+.svc-card.large { grid-column: span 2; }
+.svc-card.tall { grid-row: span 2; }
+.svc-card-bg {
+  position: absolute; inset: 0; border-radius: 16px;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.svc-card:hover .svc-card-bg { opacity: 1; }
+.svc-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+.svc-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem; font-weight: 700; margin-bottom: 0.7rem;
+}
+.svc-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+.svc-arrow {
+  position: absolute; bottom: 2rem; right: 2rem;
+  font-size: 1.5rem; color: var(--violet2);
+  opacity: 0; transform: translate(-5px, 5px);
+  transition: opacity .3s, transform .3s;
+}
+.svc-card:hover .svc-arrow { opacity: 1; transform: translate(0, 0); }
+
+/* card gradients */
+.svc-1 .svc-card-bg { background: radial-gradient(circle at top left, rgba(124,58,237,0.12), transparent 70%); }
+.svc-2 .svc-card-bg { background: radial-gradient(circle at top right, rgba(0,245,255,0.08), transparent 70%); }
+.svc-3 .svc-card-bg { background: radial-gradient(circle at bottom left, rgba(255,209,102,0.08), transparent 70%); }
+.svc-4 .svc-card-bg { background: radial-gradient(circle at center, rgba(6,214,160,0.1), transparent 70%); }
+.svc-5 .svc-card-bg { background: radial-gradient(circle at top, rgba(124,58,237,0.15), transparent 70%); }
+
+/* ─── PARALLAX TEXT MARQUEE ─── */
+.marquee-section {
+  padding: 4rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+.marquee-track {
+  display: flex; gap: 3rem;
+  animation: marqueeScroll 20s linear infinite;
+  white-space: nowrap;
+}
+.marquee-track2 {
+  animation-direction: reverse;
+  animation-duration: 25s;
+  margin-top: 1rem;
+}
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 4px;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(124,58,237,0.4);
+  flex-shrink: 0;
+}
+.marquee-item.filled {
+  color: var(--violet2);
+  -webkit-text-stroke: none;
+}
+.marquee-dot {
+  font-size: 0.5rem;
+  color: var(--cyan);
+  vertical-align: middle;
+}
+
+/* ─── 3D PROCESS STEPS ─── */
+.process-section {
+  padding: 8rem 5rem;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.process-inner { max-width: 1200px; margin: 0 auto; }
+.steps-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 5rem;
+  position: relative;
+}
+.steps-timeline::before {
+  content: '';
+  position: absolute;
+  top: 3rem; left: 2rem; right: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--violet), var(--cyan), var(--violet), transparent);
+}
+.step-item {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  position: relative;
+  transition: transform .3s, box-shadow .3s;
+}
+.step-item:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 60px rgba(124,58,237,0.2); }
+.step-num {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--violet), var(--violet2));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 0 20px rgba(124,58,237,0.5);
+  position: relative; z-index: 1;
+}
+.step-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+.step-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+.step-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+/* ─── PRICING ─── */
+.pricing-section {
+  padding: 8rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.pricing-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(124,58,237,0.08), transparent 70%);
+  pointer-events: none;
+}
+.pricing-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
+
+/* Toggle */
+.price-toggle-wrap {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; margin: 3rem 0;
+}
+.toggle-label2 { font-size: 0.8rem; color: var(--muted); transition: color .3s; }
+.toggle-label2.active { color: var(--white); font-weight: 600; }
+.toggle2 {
+  width: 56px; height: 30px;
+  background: rgba(124,58,237,0.2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  position: relative; cursor: pointer;
+  transition: border-color .3s;
+}
+.toggle2.on { border-color: var(--violet2); background: rgba(124,58,237,0.3); }
+.toggle2-knob {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--muted);
+  position: absolute; top: 3px; left: 4px;
+  transition: left .3s, background .3s;
+}
+.toggle2.on .toggle2-knob { left: 30px; background: var(--violet2); }
+.save-pill {
+  padding: 0.2rem 0.8rem;
+  background: rgba(6,214,160,0.15);
+  border: 1px solid rgba(6,214,160,0.3);
+  color: var(--green);
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; border-radius: 100px;
+  transition: opacity .3s;
+}
+
+/* Plan cards */
+.plans-grid3 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+.plan3 {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  position: relative;
+  display: flex; flex-direction: column;
+  text-align: left;
+  transition: transform .4s cubic-bezier(0.16,1,0.3,1), box-shadow .4s, border-color .3s;
+  overflow: hidden;
+}
+.plan3::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: 20px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.06), transparent 50%);
+  pointer-events: none;
+}
+.plan3:hover { transform: translateY(-8px); box-shadow: 0 30px 80px rgba(124,58,237,0.2); border-color: var(--violet2); }
+
+.plan3.featured {
+  border-color: var(--violet);
+  box-shadow: 0 0 0 1px var(--violet), 0 0 60px rgba(124,58,237,0.2);
+}
+.plan3.featured::after {
+  content: '⭐ MÁS POPULAR';
+  position: absolute; top: -1px; left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--violet), var(--violet2));
+  color: #fff;
+  font-size: 0.55rem; font-weight: 700; letter-spacing: 3px;
+  padding: 0.35rem 1.5rem;
+  border-radius: 0 0 10px 10px;
+  white-space: nowrap;
+}
+.plan3-tag {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem;
+}
+.plan3-tag.violet { color: var(--violet2); }
+
+.plan3-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem; line-height: 1; color: var(--white);
+  margin-bottom: 0.3rem;
+}
+.plan3-price .cur { font-size: 2rem; color: var(--violet2); vertical-align: super; }
+.plan3-price .from {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem; color: var(--muted);
+  display: block; margin-bottom: 0.3rem; letter-spacing: 0;
+}
+.plan3-note { font-size: 0.75rem; color: var(--muted); margin-bottom: 2rem; }
+.plan3-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem; font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+.plan3-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
+.plan3-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+.plan3-section { font-size: 0.6rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--violet2); margin-bottom: 1rem; }
+.plan3-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; flex-grow: 1; }
+.plan3-features li { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.82rem; line-height: 1.5; }
+.fi-yes { color: var(--green); font-weight: 700; flex-shrink: 0; }
+.fi-no { color: rgba(255,255,255,0.15); flex-shrink: 0; }
+.fi-text { color: rgba(240,240,255,0.8); }
+.fi-text.dim { color: var(--muted); }
+.fi-badge {
+  display: inline-block;
+  font-size: 0.5rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  background: rgba(124,58,237,0.2); color: var(--violet2);
+  padding: 0.1rem 0.5rem; border-radius: 3px; margin-left: 0.4rem;
+  vertical-align: middle;
+}
+.fi-badge.new { background: rgba(6,214,160,0.15); color: var(--green); }
+
+.plan3-cta {
+  margin-top: 2.5rem;
+  display: block; text-align: center;
+  padding: 0.9rem 1.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; text-decoration: none;
+  border: 1px solid var(--border); color: var(--white);
+  border-radius: 10px;
+  transition: border-color .3s, background .3s, color .3s, box-shadow .3s;
+  cursor: pointer;
+}
+.plan3-cta:hover { border-color: var(--violet2); color: var(--violet2); box-shadow: 0 0 20px rgba(124,58,237,0.2); }
+.plan3.featured .plan3-cta {
+  background: linear-gradient(135deg, var(--violet), var(--violet2));
+  border-color: transparent; color: #fff;
+  box-shadow: 0 0 30px rgba(124,58,237,0.4);
+}
+.plan3.featured .plan3-cta:hover { box-shadow: 0 0 60px rgba(124,58,237,0.6); }
+
+/* Maintenance */
+.maint3 {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem; align-items: center;
+  position: relative; overflow: hidden;
+  margin-top: 2rem;
+  text-align: left;
+}
+.maint3::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: 20px;
+  background: radial-gradient(circle at left center, rgba(6,214,160,0.05), transparent 60%);
+}
+.maint3-eyebrow {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--green);
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.maint3-eyebrow::before { content: '●'; font-size: 0.4rem; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.3; } }
+.maint3-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem; font-weight: 800; margin-bottom: 0.7rem;
+}
+.maint3-title em { color: var(--cyan); font-style: normal; }
+.maint3-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; max-width: 500px; }
+.maint3-feats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.6rem; margin-top: 1.5rem;
+}
+.maint3-feat {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.78rem;
+}
+.maint3-feat::before { content: '✓'; color: var(--green); font-weight: 700; }
+.maint3-right { text-align: center; }
+.maint3-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 6rem; line-height: 1;
+  background: linear-gradient(135deg, var(--green), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.maint3-price .maint-cur { font-size: 2.5rem; }
+.maint3-period { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
+.maint3-cta {
+  display: block; margin-top: 1.5rem;
+  padding: 0.8rem 1.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; text-decoration: none;
+  border: 1px solid var(--green); color: var(--green);
+  border-radius: 8px;
+  transition: background .3s, color .3s;
+  cursor: pointer;
+}
+.maint3-cta:hover { background: rgba(6,214,160,0.1); }
+
+/* ─── COMPARE TABLE ─── */
+.compare-section { padding: 0 5rem 8rem; max-width: 1200px; margin: 0 auto; }
+.compare3 { width: 100%; border-collapse: collapse; font-size: 0.83rem; margin-top: 3rem; }
+.compare3 thead tr { border-bottom: 1px solid var(--border); }
+.compare3 th { padding: 1.5rem 1rem; text-align: center; font-weight: 500; }
+.compare3 th:first-child { text-align: left; color: var(--muted); font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; }
+.compare3 th .th-p { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--violet2); display: block; line-height: 1; }
+.compare3 th .th-n { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+.compare3 td { padding: 0.9rem 1rem; border-bottom: 1px solid rgba(124,58,237,0.06); text-align: center; }
+.compare3 td:first-child { text-align: left; color: var(--muted); font-size: 0.82rem; }
+.compare3 tr:hover td { background: rgba(124,58,237,0.03); }
+.chk { color: var(--green); font-weight: 700; }
+.crs { color: rgba(255,255,255,0.12); }
+.prt { color: var(--gold); font-size: 0.72rem; font-weight: 500; }
+.compare3 thead th.hl { background: rgba(124,58,237,0.06); }
+.compare3 td.hl { background: rgba(124,58,237,0.04); }
+.compare3 td.cat-row { padding: 0.5rem 0; font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--violet2); padding-top: 1.5rem; }
+
+/* ─── FAQ ─── */
+.faq-section { padding: 8rem 5rem; max-width: 800px; margin: 0 auto; }
+.faq3 { display: flex; flex-direction: column; gap: 0; margin-top: 3rem; }
+.faq3-item {
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; overflow: hidden;
+}
+.faq3-q {
+  padding: 1.5rem 0;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  font-size: 0.95rem; font-weight: 500;
+  transition: color .3s;
+}
+.faq3-item:hover .faq3-q { color: var(--violet2); }
+.faq3-icon { color: var(--violet2); font-size: 1.5rem; flex-shrink: 0; transition: transform .3s; }
+.faq3-item.open .faq3-icon { transform: rotate(45deg); }
+.faq3-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .5s cubic-bezier(0.16,1,0.3,1), padding .3s;
+  font-size: 0.85rem; line-height: 1.9; color: var(--muted);
+}
+.faq3-item.open .faq3-a { max-height: 300px; padding-bottom: 1.5rem; }
+
+/* ─── FINAL CTA ─── */
+.final-cta3 {
+  text-align: center;
+  padding: 10rem 3rem;
+  position: relative; overflow: hidden;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+.final-cta3-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(124,58,237,0.15), transparent 70%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(0,245,255,0.05), transparent 70%);
+}
+.final-cta3 .section-title { position: relative; z-index: 1; margin-bottom: 1.5rem; }
+.final-cta3-sub {
+  font-size: 1rem; font-weight: 300; color: var(--muted);
+  max-width: 420px; margin: 0 auto 3rem;
+  position: relative; z-index: 1;
+}
+.final-btns3 {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 3rem 5rem;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; letter-spacing: 3px;
+  background: linear-gradient(135deg, var(--violet2), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.footer-copy { font-size: 0.75rem; color: var(--muted); }
+.footer-links { display: flex; gap: 2rem; }
+.footer-links a { font-size: 0.75rem; color: var(--muted); text-decoration: none; transition: color .3s; }
+.footer-links a:hover { color: var(--cyan); }
+
+/* ─── REVEAL ANIMATIONS ─── */
+.reveal3 {
+  opacity: 0;
+  transform: translateY(50px) rotateX(5deg);
+  transition: opacity .9s cubic-bezier(0.16,1,0.3,1), transform .9s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal3.visible {
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg);
+}
+.reveal3.d1 { transition-delay: .1s; }
+.reveal3.d2 { transition-delay: .2s; }
+.reveal3.d3 { transition-delay: .3s; }
+.reveal3.d4 { transition-delay: .4s; }
+
+/* ─── 3D TILT on hover ─── */
+.tilt-card { transform-style: preserve-3d; }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 3px; }
+
+/* ─── HAMBURGER BUTTON ─── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  z-index: 1001;
+  flex-shrink: 0;
+}
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ─── MOBILE NAV OVERLAY ─── */
+.mobile-nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5,5,10,0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 998;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+.mobile-nav-overlay.open { display: flex; }
+.mobile-nav-overlay .mn-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  text-align: center;
+}
+.mobile-nav-overlay .mn-links a {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  display: block;
+  padding: 0.6rem 2.5rem;
+}
+.mobile-nav-overlay .mn-links a:hover,
+.mobile-nav-overlay .mn-links a:active { color: var(--cyan); }
+.mobile-nav-overlay .mn-cta {
+  padding: 0.85rem 2.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+
+  #hero { overflow: hidden; }
+
+  .section, .section-full, .pricing-section { padding: 5rem 2rem; }
+  .faq-section { padding: 5rem 2rem; }
+  .compare-section { padding: 0 2rem 5rem; }
+  .process-section { padding: 5rem 2rem; }
+
+  .services-grid { grid-template-columns: 1fr; }
+  .svc-card.large { grid-column: span 1; }
+
+  .steps-timeline { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .steps-timeline::before { display: none; }
+
+  .plans-grid3 { grid-template-columns: 1fr; gap: 1.5rem; }
+  .plan3-price { font-size: 3.5rem; }
+
+  .maint3 { grid-template-columns: 1fr; text-align: center; }
+  .maint3-right { min-width: auto; }
+  .maint3-feats { grid-template-columns: 1fr 1fr; }
+  .maint3-price { font-size: 4.5rem; }
+  .maint3-desc { max-width: 100%; }
+
+  .stats-bar { flex-direction: column; gap: 0; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 1.5rem; width: 100%; }
+  .stat-item:last-child { border-bottom: none; }
+
+  body { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
+  .float-card { display: none; }
+
+  footer {
+    padding: 2rem 1.5rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .final-cta3 { padding: 6rem 2rem; }
+  .marquee-item { font-size: 2rem; }
+
+  /* Horizontal scroll → swipe cards on mobile */
+  .h-scroll-section { height: auto; }
+  .h-scroll-sticky {
+    position: relative;
+    height: auto;
+    display: block;
+    padding: 3rem 0 2rem;
+    overflow: hidden;
+  }
+  .h-scroll-sticky > div:first-child {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    z-index: auto !important;
+    padding: 0 1.5rem 1.5rem;
+  }
+  .h-scroll-track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.5rem 1.5rem 2rem;
+    gap: 1rem;
+    transform: none !important;
+    will-change: auto;
+    transition: none;
+  }
+  .h-scroll-track::-webkit-scrollbar { height: 3px; }
+  .h-scroll-track::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 2px; }
+  .h-card {
+    width: clamp(260px, 80vw, 380px);
+    height: auto;
+    min-height: 340px;
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-badge { font-size: 0.58rem; letter-spacing: 2px; padding: 0.35rem 0.9rem; max-width: 90vw; white-space: normal; text-align: center; }
+  .hero-sub { font-size: 0.9rem; margin-bottom: 2rem; padding: 0 1rem; }
+  .hero-btns { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-secondary { width: 100%; max-width: 280px; text-align: center; }
+  .hero-title { font-size: clamp(1.8rem, 8.5vw, 3rem); letter-spacing: -1px; padding: 0 0.5rem; line-height: 1; }
+  .hero-content { padding: 0 1rem; width: 100%; max-width: 100vw; }
+
+  .section, .section-full, .pricing-section, .faq-section { padding: 4rem 1.25rem; }
+  .compare-section { padding: 0 1.25rem 4rem; }
+  .process-section { padding: 4rem 1.25rem; }
+
+  .steps-timeline { grid-template-columns: 1fr; }
+
+  .section-title { letter-spacing: -0.5px; }
+  .marquee-item { font-size: 1.5rem; }
+
+  .faq3-q { font-size: 0.88rem; }
+  .stat-num { font-size: 2.5rem; }
+
+  .plan3 { padding: 2rem 1.5rem; }
+  .plan3-price { font-size: 3rem; }
+  .plan3-name { font-size: 1.5rem; }
+  .maint3 { padding: 2rem 1.25rem; }
+  .maint3-price { font-size: 3.5rem; }
+  .maint3-feats { grid-template-columns: 1fr; }
+  .maint3-title { font-size: 1.6rem; }
+
+  .final-cta3 { padding: 5rem 1.25rem; }
+  .final-cta3-sub { font-size: 0.88rem; }
+  .final-btns3 { flex-direction: column; align-items: center; }
+  .final-btns3 .btn-primary,
+  .final-btns3 .btn-secondary { width: 100%; max-width: 280px; text-align: center; }
+
+  .compare3 { font-size: 0.72rem; }
+  .compare3 th, .compare3 td { padding: 0.65rem 0.4rem; }
+  .compare3 th .th-p { font-size: 1.4rem; }
+  .compare3 th .th-n { font-size: 0.65rem; }
+
+  .h-card { padding: 2rem; min-height: 300px; }
+  .h-card-title { font-size: 1.3rem; }
+  .h-card-num { font-size: 3.5rem; }
+
+  .price-toggle-wrap { flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+
+  .footer-links { gap: 1.5rem; }
+}
+
+@media (max-width: 380px) {
+  .nav-logo { font-size: 1.1rem; letter-spacing: 1px; }
+  .hero-badge { font-size: 0.52rem; padding: 0.3rem 0.7rem; }
+  .hero-title { font-size: clamp(1.6rem, 7.5vw, 2.5rem); }
+  .plan3-price { font-size: 2.5rem; }
+  .maint3-price { font-size: 3rem; }
+  .mobile-nav-overlay .mn-links a { font-size: 1.8rem; padding: 0.5rem 1.5rem; }
+  .stats-bar { padding: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor-dot" id="dot"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="IMG_0859.PNG" alt="Visionarios Company">
+    <span>VISIONARIOS COMPANY</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/34675048731" class="nav-cta" target="_blank">Contactar →</a>
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV OVERLAY -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay">
+  <ul class="mn-links">
+    <li><a href="#servicios" onclick="closeMobileNav()">Servicios</a></li>
+    <li><a href="#proceso" onclick="closeMobileNav()">Proceso</a></li>
+    <li><a href="#precios" onclick="closeMobileNav()">Precios</a></li>
+    <li><a href="#faq" onclick="closeMobileNav()">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/34675048731" class="nav-cta mn-cta" target="_blank" onclick="closeMobileNav()">Contactar →</a>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-3d"></div>
+  
+  <div class="particles" id="particles"></div>
+
+  <!-- Floating cards -->
+  <div class="hero-float-cards">
+    <div class="float-card float-card-1"><span class="fc-icon">🚀</span>Lanzamiento en 7 días</div>
+    <div class="float-card float-card-2"><span class="fc-icon">⭐</span>Diseño premium</div>
+    <div class="float-card float-card-3"><span class="fc-icon">📈</span>+80 negocios activos</div>
+    <div class="float-card float-card-4"><span class="fc-icon">🔒</span>Hosting incluido</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge">◉ Creación de Páginas Web Profesionales</div>
+    <h1 class="hero-title">
+      <span class="line1">VISIONARIOS</span>
+      <span class="line2">COMPANY</span>
+      <span class="line3">Tu negocio merece una web que venda</span>
+    </h1>
+    <p class="hero-sub">Diseñamos webs desde cero con animaciones 3D, scroll viral y diseño que enamora. Resultados desde el primer mes.</p>
+    <div class="hero-btns">
+      <a href="#precios" class="btn-primary">Ver planes →</a>
+      <a href="https://wa.me/34675048731" class="btn-secondary" target="_blank">📱 Escríbenos</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span class="scroll-arrow">↓</span>
+    <span>SCROLL</span>
+  </div>
+</section>
+
+<!-- ═══════════════ STATS ═══════════════ -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">+80</div><div class="stat-label">Negocios con web</div></div>
+  <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">Días de entrega</div></div>
+  <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Satisfacción garantizada</div></div>
+  <div class="stat-item"><div class="stat-num">€0</div><div class="stat-label">Para empezar</div></div>
+</div>
+
+<!-- ═══════════════ HORIZONTAL SCROLL ═══════════════ -->
+<div class="h-scroll-section" id="hscroll">
+  <div class="h-scroll-sticky">
+    <div style="position:absolute;top:3rem;left:5rem;z-index:10">
+      <div class="eyebrow">Lo que hacemos</div>
+      <div style="font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-2px">Experiencias <em style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;background:linear-gradient(135deg,#7c3aed,#00f5ff);background-clip:text">digitales</em></div>
+    </div>
+    <div class="h-scroll-track" id="htrack">
+      <div class="h-card" style="background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(10,10,24,0.9))">
+        <div class="h-card-num">01</div>
+        <div class="h-card-icon">🎨</div>
+        <div class="h-card-title">Diseño<br>Personalizado</div>
+        <div class="h-card-desc">Cada web es única. Creamos desde cero con tus colores, tipografías y estilo. Sin plantillas genéricas.</div>
+        <div class="h-card-accent"></div>
+      </div>
+      <div class="h-card" style="background:linear-gradient(135deg,rgba(0,245,255,0.08),rgba(10,10,24,0.9))">
+        <div class="h-card-num">02</div>
+        <div class="h-card-icon">✨</div>
+        <div class="h-card-title">Animaciones<br>3D Virales</div>
+        <div class="h-card-desc">Efectos de scroll que hacen que tus visitantes no puedan parar de explorar. Ese efecto WOW que se comparte.</div>
+        <div class="h-card-accent" style="background:linear-gradient(90deg,#00f5ff,#7c3aed)"></div>
+      </div>
+      <div class="h-card" style="background:linear-gradient(135deg,rgba(255,209,102,0.08),rgba(10,10,24,0.9))">
+        <div class="h-card-num">03</div>
+        <div class="h-card-icon">📸</div>
+        <div class="h-card-title">Sesión<br>Fotográfica</div>
+        <div class="h-card-desc">Nos desplazamos a tu negocio. Fotos profesionales de tus productos y espacio, editadas y optimizadas.</div>
+        <div class="h-card-accent" style="background:linear-gradient(90deg,#ffd166,#7c3aed)"></div>
+      </div>
+      <div class="h-card" style="background:linear-gradient(135deg,rgba(6,214,160,0.08),rgba(10,10,24,0.9))">
+        <div class="h-card-num">04</div>
+        <div class="h-card-icon">🛒</div>
+        <div class="h-card-title">Tienda<br>Online</div>
+        <div class="h-card-desc">Vende desde el primer día. Carrito, pagos, gestión de stock. Todo integrado y fácil de usar.</div>
+        <div class="h-card-accent" style="background:linear-gradient(90deg,#06d6a0,#00f5ff)"></div>
+      </div>
+      <div class="h-card" style="background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(10,10,24,0.9))">
+        <div class="h-card-num">05</div>
+        <div class="h-card-icon">📊</div>
+        <div class="h-card-title">SEO &<br>Analytics</div>
+        <div class="h-card-desc">Aparece en Google y entiende a tus visitantes. Datos reales para decisiones reales.</div>
+        <div class="h-card-accent" style="background:linear-gradient(90deg,#7c3aed,#ffd166)"></div>
+      </div>
+      <div class="h-card" style="background:linear-gradient(135deg,rgba(0,245,255,0.06),rgba(10,10,24,0.9))">
+        <div class="h-card-num">06</div>
+        <div class="h-card-icon">🔧</div>
+        <div class="h-card-title">Soporte<br>Continuo</div>
+        <div class="h-card-desc">No te dejamos solo. Actualizaciones por WhatsApp, cambios de contenido y soporte técnico ilimitado.</div>
+        <div class="h-card-accent" style="background:linear-gradient(90deg,#00f5ff,#06d6a0)"></div>
+      </div>
+      <!-- duplicates for infinite feel -->
+      <div class="h-card" style="background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(10,10,24,0.9));opacity:0.4">
+        <div class="h-card-num">01</div>
+        <div class="h-card-icon">🎨</div>
+        <div class="h-card-title">Diseño<br>Personalizado</div>
+        <div class="h-card-desc">Cada web es única. Creamos desde cero con tus colores, tipografías y estilo.</div>
+        <div class="h-card-accent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MARQUEE ═══════════════ -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item filled">VISIONARIOS</span><span class="marquee-dot">★</span>
+    <span class="marquee-item">DISEÑO WEB</span><span class="marquee-dot">★</span>
+    <span class="marquee-item filled">3D SCROLL</span><span class="marquee-dot">★</span>
+    <span class="marquee-item">TIENDA ONLINE</span><span class="marquee-dot">★</span>
+    <span class="marquee-item filled">SEO</span><span class="marquee-dot">★</span>
+    <span class="marquee-item">FOTOGRAFÍA</span><span class="marquee-dot">★</span>
+    <span class="marquee-item filled">VISIONARIOS</span><span class="marquee-dot">★</span>
+    <span class="marquee-item">DISEÑO WEB</span><span class="marquee-dot">★</span>
+    <span class="marquee-item filled">3D SCROLL</span><span class="marquee-dot">★</span>
+    <span class="marquee-item">TIENDA ONLINE</span><span class="marquee-dot">★</span>
+    <span class="marquee-item filled">SEO</span><span class="marquee-dot">★</span>
+    <span class="marquee-item">FOTOGRAFÍA</span><span class="marquee-dot">★</span>
+  </div>
+  <div class="marquee-track marquee-track2" style="margin-top:1rem">
+    <span class="marquee-item">ANIMACIONES</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item filled">WEBS QUE VENDEN</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">MOBILE FIRST</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item filled">EFECTO VIRAL</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">ENTREGA EN 7 DÍAS</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item filled">HOSTING INCLUIDO</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">ANIMACIONES</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item filled">WEBS QUE VENDEN</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">MOBILE FIRST</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item filled">EFECTO VIRAL</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item">ENTREGA EN 7 DÍAS</span><span class="marquee-dot">◆</span>
+    <span class="marquee-item filled">HOSTING INCLUIDO</span><span class="marquee-dot">◆</span>
+  </div>
+</div>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<div class="section" id="servicios">
+  <div class="eyebrow reveal3">Servicios</div>
+  <h2 class="section-title reveal3 d1">Todo lo que necesita<br>tu <em>negocio digital</em></h2>
+  <div class="services-grid">
+    <div class="svc-card svc-1 large reveal3 d1 tilt-card">
+      <div class="svc-card-bg"></div>
+      <div class="svc-icon">🎨</div>
+      <div class="svc-title">Diseño Web a Medida</div>
+      <div class="svc-desc">Webs únicas con tu identidad de marca. Colores, tipografías y elementos que representan exactamente lo que eres. Animaciones que enamoran, scroll effects virales y una presencia digital que impresiona desde el primer segundo.</div>
+      <div class="svc-arrow">→</div>
+    </div>
+    <div class="svc-card svc-2 reveal3 d2 tilt-card">
+      <div class="svc-card-bg"></div>
+      <div class="svc-icon">📱</div>
+      <div class="svc-title">Mobile Perfecto</div>
+      <div class="svc-desc">El 80% de tus clientes te verán desde el móvil. Tu web se adapta perfectamente a cualquier dispositivo.</div>
+      <div class="svc-arrow">→</div>
+    </div>
+    <div class="svc-card svc-3 reveal3 d1 tilt-card">
+      <div class="svc-card-bg"></div>
+      <div class="svc-icon">📸</div>
+      <div class="svc-title">Fotografía Profesional</div>
+      <div class="svc-desc">Vamos a tu negocio. Capturamos tus productos, espacio y equipo con calidad profesional. Editadas y listas para web.</div>
+      <div class="svc-arrow">→</div>
+    </div>
+    <div class="svc-card svc-4 reveal3 d2 tilt-card">
+      <div class="svc-card-bg"></div>
+      <div class="svc-icon">🛒</div>
+      <div class="svc-title">Tienda Online</div>
+      <div class="svc-desc">Catálogo, carrito y pagos. Vende online desde el primer día con una tienda fácil de gestionar.</div>
+      <div class="svc-arrow">→</div>
+    </div>
+    <div class="svc-card svc-5 reveal3 d3 tilt-card">
+      <div class="svc-card-bg"></div>
+      <div class="svc-icon">🚀</div>
+      <div class="svc-title">SEO + Analytics</div>
+      <div class="svc-desc">Aparece en Google y mide cada visita. Datos reales para hacer crecer tu negocio.</div>
+      <div class="svc-arrow">→</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PROCESS ═══════════════ -->
+<div class="process-section" id="proceso">
+  <div class="process-inner">
+    <div class="eyebrow reveal3">Proceso</div>
+    <h2 class="section-title reveal3 d1">De cero a lanzado<br>en <em>7 días</em></h2>
+    <div class="steps-timeline">
+      <div class="step-item reveal3 d1">
+        <div class="step-num">1</div>
+        <div class="step-icon">💬</div>
+        <div class="step-title">Briefing</div>
+        <div class="step-desc">Hablamos, entendemos tu negocio y recopilamos tu logo, colores e información esencial.</div>
+      </div>
+      <div class="step-item reveal3 d2">
+        <div class="step-num">2</div>
+        <div class="step-icon">📸</div>
+        <div class="step-title">Sesión de fotos</div>
+        <div class="step-desc">Vamos a tu local en los primeros 2 días y capturamos todo lo necesario para hacer brillar tu web.</div>
+      </div>
+      <div class="step-item reveal3 d3">
+        <div class="step-num">3</div>
+        <div class="step-icon">⚡</div>
+        <div class="step-title">Diseño & Dev</div>
+        <div class="step-desc">Construimos tu web con animaciones 3D, efectos de scroll y todo el contenido optimizado.</div>
+      </div>
+      <div class="step-item reveal3 d4">
+        <div class="step-num">4</div>
+        <div class="step-icon">🚀</div>
+        <div class="step-title">Lanzamiento</div>
+        <div class="step-desc">Tu web en vivo con hosting configurado, dominio y soporte incluido. Listo para recibir clientes.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PRICING ═══════════════ -->
+<div class="pricing-section" id="precios">
+  <div class="pricing-inner">
+    <div class="eyebrow reveal3">Precios</div>
+    <h2 class="section-title reveal3 d1">Elige tu plan.<br><em>Empieza hoy.</em></h2>
+    <div class="plans-grid3 reveal3 d2">
+
+      <!-- PROFESIONAL -->
+      <div class="plan3 featured tilt-card">
+        <div class="plan3-tag violet">⭐ El más elegido</div>
+        <div>
+          <div class="plan3-price monthly-p">
+            <span class="from">Desde</span>
+            <span class="cur">€</span>449
+          </div>
+          <div class="plan3-price annual-p" style="display:none">
+            <span class="from">Pack anual</span>
+            <span class="cur">€</span>339
+          </div>
+          <div class="plan3-note monthly-n">Pago único · Entrega en 7 días</div>
+          <div class="plan3-note annual-n" style="display:none">× 12 meses · €4.068/año</div>
+        </div>
+        <div class="plan3-name">Profesional</div>
+        <p class="plan3-desc">La solución completa para negocios que quieren diferenciarse. Incluye sesión de fotos de tus productos para que tu web luzca de verdad.</p>
+        <div class="plan3-section">🌐 Tu web incluye</div>
+        <ul class="plan3-features">
+          <li><span class="fi-yes">✓</span><span class="fi-text">Web multi-sección completa</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Diseño premium personalizado</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Efectos de scroll virales</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Versión móvil perfecta</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Formulario de contacto y reservas</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Integración con Google Maps</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Hosting + dominio configurado</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">1 mes de soporte gratuito</span></li>
+          <div class="plan3-divider"></div>
+          <div class="plan3-section">📸 Sesión fotográfica incluida</div>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Fotos de tus productos o servicios <span class="fi-badge">INCLUIDO</span></span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Fotos del local o negocio</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Editadas y optimizadas para web</span></li>
+          <li><span class="fi-no">—</span><span class="fi-text dim">Tienda online</span></li>
+        </ul>
+        <a href="https://wa.me/34675048731?text=Hola,%20me%20interesa%20el%20plan%20Profesional" class="plan3-cta" target="_blank">Quiero este plan →</a>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="plan3 tilt-card">
+        <div class="plan3-tag">Todo incluido</div>
+        <div>
+          <div class="plan3-price monthly-p">
+            <span class="from">Desde</span>
+            <span class="cur">€</span>699
+          </div>
+          <div class="plan3-price annual-p" style="display:none">
+            <span class="from">Pack anual</span>
+            <span class="cur">€</span>594
+          </div>
+          <div class="plan3-note monthly-n">Pago único · Tienda incluida</div>
+          <div class="plan3-note annual-n" style="display:none">× 12 meses · €7.128/año</div>
+        </div>
+        <div class="plan3-name">Premium</div>
+        <p class="plan3-desc">Para negocios que quieren vender online. Tienda completa, sesión de fotos profesional y todo lo necesario para crecer en internet.</p>
+        <div class="plan3-section">🌐 Tu web incluye</div>
+        <ul class="plan3-features">
+          <li><span class="fi-yes">✓</span><span class="fi-text">Todo del plan Profesional</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">SEO básico (aparecer en Google)</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Google Analytics instalado</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">3 meses de soporte y mantenimiento</span></li>
+          <div class="plan3-divider"></div>
+          <div class="plan3-section">📸 Sesión fotográfica completa</div>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Fotos con fondo neutro <span class="fi-badge">INCLUIDO</span></span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Fotos del local, equipo y ambiente</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">30+ fotos editadas y optimizadas</span></li>
+          <div class="plan3-divider"></div>
+          <div class="plan3-section">🛒 Tienda online</div>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Catálogo de hasta 30 productos <span class="fi-badge new">TIENDA</span></span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Carrito de compra y pago online</span></li>
+          <li><span class="fi-yes">✓</span><span class="fi-text">Gestión de pedidos y stock</span></li>
+        </ul>
+        <a href="https://wa.me/34675048731?text=Hola,%20me%20interesa%20el%20plan%20Premium" class="plan3-cta" target="_blank">Quiero este plan →</a>
+      </div>
+
+    </div><!-- /plans -->
+
+    <!-- MANTENIMIENTO -->
+    <div class="maint3 reveal3 d3">
+      <div>
+        <div class="maint3-eyebrow">Servicio mensual activo</div>
+        <div class="maint3-title">Mantenimiento<br><em>sin preocupaciones</em></div>
+        <p class="maint3-desc">Olvídate de la tecnología. Nosotros nos encargamos de todo para que tu web funcione siempre perfectamente.</p>
+        <div class="maint3-feats">
+          <div class="maint3-feat">Actualizaciones de contenido</div>
+          <div class="maint3-feat">Cambios de fotos o precios</div>
+          <div class="maint3-feat">Soporte técnico ilimitado</div>
+          <div class="maint3-feat">Informe mensual de visitas</div>
+          <div class="maint3-feat">Copias de seguridad diarias</div>
+          <div class="maint3-feat">Añadir productos nuevos</div>
+        </div>
+      </div>
+      <div class="maint3-right">
+        <div class="maint3-price"><span class="maint-cur">€</span>49</div>
+        <div class="maint3-period">al mes · cancela cuando quieras</div>
+        <a href="https://wa.me/34675048731?text=Hola,%20me%20interesa%20el%20mantenimiento" class="maint3-cta" target="_blank">Añadir mantenimiento →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════ COMPARE ═══════════════ -->
+<div class="compare-section">
+  <div class="eyebrow reveal3">Comparativa</div>
+  <h2 class="section-title reveal3 d1">¿Qué incluye <em>cada plan?</em></h2>
+  <div class="reveal3 d2" style="overflow-x:auto">
+    <table class="compare3">
+      <thead>
+        <tr>
+          <th>Características</th>
+          <th class="hl"><span class="th-p">€449</span><span class="th-n">Profesional ⭐</span></th>
+          <th><span class="th-p">€699</span><span class="th-n">Premium</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="3" class="cat-row">🌐 La web</td></tr>
+        <tr><td>Diseño personalizado</td><td class="hl"><span class="chk">✓</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>Animaciones de scroll</td><td class="hl"><span class="chk">✓</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>Versión móvil perfecta</td><td class="hl"><span class="chk">✓</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>Hosting gratuito</td><td class="hl"><span class="chk">✓</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>Formulario de reservas</td><td class="hl"><span class="chk">✓</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>Google Maps integrado</td><td class="hl"><span class="chk">✓</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>SEO (aparecer en Google)</td><td class="hl"><span class="crs">—</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>Google Analytics</td><td class="hl"><span class="crs">—</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td colspan="3" class="cat-row">📸 Sesión de fotos</td></tr>
+        <tr><td>Fotos de producto</td><td class="hl"><span class="chk">✓</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>Fotos del local</td><td class="hl"><span class="chk">✓</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>Edición profesional</td><td class="hl"><span class="prt">10 fotos</span></td><td><span class="prt">30+ fotos</span></td></tr>
+        <tr><td colspan="3" class="cat-row">🛒 Tienda online</td></tr>
+        <tr><td>Catálogo de productos</td><td class="hl"><span class="crs">—</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>Carrito y pago online</td><td class="hl"><span class="crs">—</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td>Gestión de pedidos</td><td class="hl"><span class="crs">—</span></td><td><span class="chk">✓</span></td></tr>
+        <tr><td colspan="3" class="cat-row">🤝 Soporte</td></tr>
+        <tr><td>Soporte incluido</td><td class="hl"><span class="prt">1 mes</span></td><td><span class="prt">3 meses</span></td></tr>
+        <tr><td>Tiempo de entrega</td><td class="hl"><span class="prt">7 días</span></td><td><span class="prt">10 días</span></td></tr>
+        <tr><td>Revisiones incluidas</td><td class="hl"><span class="prt">2</span></td><td><span class="prt">3</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<div class="faq-section" id="faq">
+  <div class="eyebrow reveal3">Preguntas frecuentes</div>
+  <h2 class="section-title reveal3 d1">Lo que <em>siempre preguntan</em></h2>
+  <div class="faq3 reveal3 d2">
+    <div class="faq3-item" onclick="toggleFaq3(this)">
+      <div class="faq3-q">¿Cuánto tiempo tarda en estar lista mi web? <span class="faq3-icon">+</span></div>
+      <div class="faq3-a">El plan Profesional está listo en 7 días y el Premium en 10 días desde que nos das los materiales (logo, textos e información). Si contratas la sesión de fotos, la hacemos en los primeros 2 días para tenerlas listas a tiempo.</div>
+    </div>
+    <div class="faq3-item" onclick="toggleFaq3(this)">
+      <div class="faq3-q">¿La sesión de fotos se hace en mi negocio? <span class="faq3-icon">+</span></div>
+      <div class="faq3-a">Sí, nos desplazamos a tu local o negocio. Hacemos fotos de tus productos, del ambiente y del equipo. En el plan Premium también incluimos fotos de producto con fondo neutro. Todas las fotos se entregan editadas y optimizadas para que carguen rápido en la web.</div>
+    </div>
+    <div class="faq3-item" onclick="toggleFaq3(this)">
+      <div class="faq3-q">¿Necesito saber de tecnología para gestionar mi web? <span class="faq3-icon">+</span></div>
+      <div class="faq3-a">Para nada. Si contratas el mantenimiento mensual, nosotros nos encargamos de todo: cambios de fotos, actualizar precios, añadir productos nuevos, arreglar cualquier problema. Tú solo tienes que enviarnos lo que quieres cambiar por WhatsApp.</div>
+    </div>
+    <div class="faq3-item" onclick="toggleFaq3(this)">
+      <div class="faq3-q">¿Qué pasa si no me gusta el diseño? <span class="faq3-icon">+</span></div>
+      <div class="faq3-a">Antes de empezar te pedimos ejemplos de webs que te gusten y hacemos una breve reunión para entender tu estilo. Cada plan incluye entre 1 y 3 rondas de revisiones. Si tras todas las revisiones todavía no estás satisfecho, te devolvemos el dinero.</div>
+    </div>
+    <div class="faq3-item" onclick="toggleFaq3(this)">
+      <div class="faq3-q">¿Cómo se paga? ¿Hay que pagar todo de una vez? <span class="faq3-icon">+</span></div>
+      <div class="faq3-a">No. Trabajamos con el 50% al inicio y el 50% cuando la web esté terminada y aprobada. Aceptamos transferencia bancaria, Bizum y PayPal. Si quieres dominio propio, el coste es de unos €10-15 al año y se paga aparte.</div>
+    </div>
+    <div class="faq3-item" onclick="toggleFaq3(this)">
+      <div class="faq3-q">¿La tienda online del plan Premium puede vender de verdad? <span class="faq3-icon">+</span></div>
+      <div class="faq3-a">Sí, completamente funcional. Los clientes pueden añadir productos al carrito, pagar con tarjeta o transferencia, y tú recibes el pedido por email. Puedes gestionar el stock y los pedidos desde un panel sencillo. Ideal para hasta 30 productos.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FINAL CTA ═══════════════ -->
+<div class="final-cta3">
+  <div class="final-cta3-bg"></div>
+  <h2 class="section-title reveal3">¿Hablamos<br><em>sin compromiso?</em></h2>
+  <p class="final-cta3-sub reveal3 d1">Te mostramos cómo quedaría tu web antes de que decidas nada. Sin coste, sin compromiso.</p>
+  <div class="final-btns3 reveal3 d2">
+    <a href="https://wa.me/34675048731?text=Hola,%20quiero%20ver%20cómo%20quedaría%20mi%20web" class="btn-primary" target="_blank">📱 Escríbenos por WhatsApp</a>
+    <a href="tel:+34675048731" class="btn-secondary">📞 Llámanos ahora</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">VISIONARIOS COMPANY</div>
+  <div class="footer-copy">© 2026 Visionarios Company. Todos los derechos reservados.</div>
+  <div class="footer-links">
+    <a href="#">Privacidad</a>
+    <a href="#">Cookies</a>
+    <a href="https://wa.me/34675048731" target="_blank">Contacto</a>
+  </div>
+</footer>
+
+<script>
+// ─── CURSOR ───
+const dot = document.getElementById('dot');
+const ring = document.getElementById('ring');
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px';
+  dot.style.top = my + 'px';
+  ring.style.left = mx + 'px';
+  ring.style.top = my + 'px';
+});
+
+// ─── PARTICLES ───
+const pCont = document.getElementById('particles');
+for (let i = 0; i < 60; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = (8 + Math.random() * 15) + 's';
+  p.style.animationDelay = -(Math.random() * 20) + 's';
+  p.style.setProperty('--dx', (Math.random() * 200 - 100) + 'px');
+  p.style.width = p.style.height = (1 + Math.random() * 3) + 'px';
+  const colors = ['#7c3aed', '#00f5ff', '#ffd166', '#06d6a0', '#9f67ff'];
+  p.style.background = colors[Math.floor(Math.random() * colors.length)];
+  pCont.appendChild(p);
+}
+
+// ─── HORIZONTAL SCROLL ───
+const hSection = document.getElementById('hscroll');
+const hTrack = document.getElementById('htrack');
+function updateHScroll() {
+  if (window.innerWidth <= 900) return; // disabled on mobile — uses native swipe
+  const rect = hSection.getBoundingClientRect();
+  const sectionHeight = hSection.offsetHeight;
+  const viewH = window.innerHeight;
+  const progress = Math.max(0, Math.min(1, -rect.top / (sectionHeight - viewH)));
+  const maxTranslate = hTrack.scrollWidth - window.innerWidth + 100;
+  hTrack.style.transform = `translateX(-${progress * maxTranslate}px)`;
+}
+window.addEventListener('scroll', updateHScroll, { passive: true });
+
+// ─── 3D TILT ───
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(600px) rotateY(${x * 15}deg) rotateX(${-y * 10}deg) translateY(-5px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ─── SCROLL REVEAL ───
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal3').forEach(el => obs.observe(el));
+
+// ─── NAV parallax shrink ───
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  const isMobile = window.innerWidth <= 900;
+  const basePad = isMobile ? '1rem 1.5rem' : '1.2rem 3rem';
+  const scrolledPad = isMobile ? '0.7rem 1.5rem' : '0.7rem 3rem';
+  nav.style.padding = window.scrollY > 50 ? scrolledPad : basePad;
+}, { passive: true });
+
+// ─── PRICING TOGGLE ───
+let isAnnual = false;
+function togglePricing() {
+  isAnnual = !isAnnual;
+  const btn = document.getElementById('toggle2Btn');
+  const lM = document.getElementById('lbl2-month');
+  const lA = document.getElementById('lbl2-annual');
+  const pill = document.getElementById('savePill');
+  btn.classList.toggle('on', isAnnual);
+  lM.classList.toggle('active', !isAnnual);
+  lA.classList.toggle('active', isAnnual);
+  pill.style.opacity = isAnnual ? '1' : '.4';
+  document.querySelectorAll('.monthly-p, .monthly-n').forEach(el => el.style.display = isAnnual ? 'none' : '');
+  document.querySelectorAll('.annual-p, .annual-n').forEach(el => el.style.display = isAnnual ? '' : 'none');
+}
+
+// ─── FAQ ───
+function toggleFaq3(el) {
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq3-item.open').forEach(f => f.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
+}
+
+// ─── MOBILE NAV ───
+function toggleMobileNav() {
+  const btn = document.getElementById('navHamburger');
+  const overlay = document.getElementById('mobileNavOverlay');
+  const isOpen = overlay.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+function closeMobileNav() {
+  document.getElementById('navHamburger').classList.remove('open');
+  document.getElementById('mobileNavOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ─── PARALLAX HERO on scroll ───
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  const hc = document.querySelector('.hero-content');
+  const grid = document.querySelector('.grid-3d');
+  if (hc && sy < window.innerHeight) {
+    hc.style.transform = `translateY(${sy * 0.3}px) scale(${1 - sy * 0.0002})`;
+    hc.style.opacity = 1 - sy / (window.innerHeight * 0.8);
+    grid.style.transform = `rotateX(60deg) translateY(${30 - sy * 0.03}%) scaleX(2)`;
+  }
+}, { passive: true });
+</script>
+</body>
+</html>
