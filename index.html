@@ -710,10 +710,10 @@ nav {
   background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 3rem;
+  padding: 2.5rem 3rem;
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 3rem; align-items: center;
+  grid-template-columns: 1fr 220px;
+  gap: 2.5rem; align-items: center;
   position: relative; overflow: hidden;
   margin-top: 2rem;
   text-align: left;
@@ -727,43 +727,58 @@ nav {
   font-size: 0.6rem; font-weight: 700; letter-spacing: 4px;
   text-transform: uppercase; color: var(--green);
   display: flex; align-items: center; gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
 }
 .maint3-eyebrow::before { content: '●'; font-size: 0.4rem; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.3; } }
 .maint3-title {
   font-family: 'Syne', sans-serif;
-  font-size: 2rem; font-weight: 800; margin-bottom: 0.7rem;
+  font-size: 2rem; font-weight: 800; margin-bottom: 0.6rem; line-height: 1.1;
 }
 .maint3-title em { color: var(--cyan); font-style: normal; }
-.maint3-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; max-width: 500px; }
+.maint3-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.7; }
 .maint3-feats {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 0.6rem; margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 1.2rem;
+}
+.maint3-feats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem 1.5rem;
 }
 .maint3-feat {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.78rem;
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  font-size: 0.78rem; line-height: 1.4;
 }
-.maint3-feat::before { content: '✓'; color: var(--green); font-weight: 700; }
-.maint3-right { text-align: center; }
+.maint3-feat-icon {
+  color: var(--green); font-weight: 700;
+  flex-shrink: 0; margin-top: 0.05rem;
+}
+.maint3-right {
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+  border-left: 1px solid var(--border);
+  padding-left: 2.5rem;
+}
 .maint3-price {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 6rem; line-height: 1;
+  font-size: 5.5rem; line-height: 1;
   background: linear-gradient(135deg, var(--green), var(--cyan));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.maint3-price .maint-cur { font-size: 2.5rem; }
-.maint3-period { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
+.maint3-price .maint-cur { font-size: 2.2rem; vertical-align: super; line-height: 1; }
+.maint3-period { font-size: 0.72rem; color: var(--muted); margin-top: 0.4rem; line-height: 1.4; text-align: center; }
 .maint3-cta {
-  display: block; margin-top: 1.5rem;
-  padding: 0.8rem 1.5rem;
+  display: block; margin-top: 1.2rem;
+  padding: 0.75rem 1.2rem;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.7rem; font-weight: 700; letter-spacing: 3px;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
   text-transform: uppercase; text-decoration: none;
   border: 1px solid var(--green); color: var(--green);
-  border-radius: 8px;
+  border-radius: 8px; white-space: nowrap;
   transition: background .3s, color .3s;
   cursor: pointer;
 }
@@ -968,11 +983,12 @@ footer {
   .plans-grid3 { grid-template-columns: 1fr; gap: 1.5rem; }
   .plan3-price { font-size: 3.5rem; }
 
-  .maint3 { grid-template-columns: 1fr; text-align: center; }
-  .maint3-right { min-width: auto; }
-  .maint3-feats { grid-template-columns: 1fr 1fr; }
+  .maint3 { grid-template-columns: 1fr; text-align: center; padding: 2rem 1.5rem; }
+  .maint3-right { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 1.5rem; margin-top: 0.5rem; width: 100%; }
+  .maint3-feats-row { grid-template-columns: 1fr 1fr; }
+  .maint3-feat { justify-content: flex-start; text-align: left; }
   .maint3-price { font-size: 4.5rem; }
-  .maint3-desc { max-width: 100%; }
+  .maint3-cta { margin: 1.2rem auto 0; width: fit-content; }
 
   .stats-bar { flex-direction: column; gap: 0; }
   .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 1.5rem; width: 100%; }
@@ -1052,9 +1068,9 @@ footer {
   .plan3 { padding: 2rem 1.5rem; }
   .plan3-price { font-size: 3rem; }
   .plan3-name { font-size: 1.5rem; }
-  .maint3 { padding: 2rem 1.25rem; }
+  .maint3 { padding: 1.75rem 1.25rem; }
   .maint3-price { font-size: 3.5rem; }
-  .maint3-feats { grid-template-columns: 1fr; }
+  .maint3-feats-row { grid-template-columns: 1fr; }
   .maint3-title { font-size: 1.6rem; }
 
   .final-cta3 { padding: 5rem 1.25rem; }
@@ -1083,6 +1099,7 @@ footer {
   .hero-title { font-size: clamp(1.6rem, 7.5vw, 2.5rem); }
   .plan3-price { font-size: 2.5rem; }
   .maint3-price { font-size: 3rem; }
+  .maint3-feats-row { grid-template-columns: 1fr; }
   .mobile-nav-overlay .mn-links a { font-size: 1.8rem; padding: 0.5rem 1.5rem; }
   .stats-bar { padding: 0; }
 }
@@ -1376,7 +1393,7 @@ footer {
           <li><span class="fi-yes">✓</span><span class="fi-text">Fotos de tus productos o servicios <span class="fi-badge">INCLUIDO</span></span></li>
           <li><span class="fi-yes">✓</span><span class="fi-text">Fotos del local o negocio</span></li>
           <li><span class="fi-yes">✓</span><span class="fi-text">Editadas y optimizadas para web</span></li>
-          <li><span class="fi-no">—</span><span class="fi-text dim">Tienda online</span></li>
+          <li><span class="fi-no" style="color:#ff4d4d;font-size:0.9rem;font-weight:700;">✗</span><span class="fi-text dim">Tienda online</span></li>
         </ul>
         <a href="https://wa.me/34675048731?text=Hola,%20me%20interesa%20el%20plan%20Profesional" class="plan3-cta" target="_blank">Quiero este plan →</a>
       </div>
@@ -1427,10 +1444,14 @@ footer {
         <div class="maint3-title">Mantenimiento<br><em>sin preocupaciones</em></div>
         <p class="maint3-desc">Olvídate de la tecnología. Nosotros nos encargamos de todo para que tu web funcione siempre perfectamente.</p>
         <div class="maint3-feats">
-          <div class="maint3-feat">Actualizaciones de contenido</div>
-          <div class="maint3-feat">Cambios de fotos y precios hasta 2 veces al mes (Las fotos actualizadas, serán hechas por el cliente)</div>
-          <div class="maint3-feat">Soporte técnico ilimitado</div>
-          <div class="maint3-feat">Copias de seguridad diarias</div>
+          <div class="maint3-feats-row">
+            <div class="maint3-feat"><span class="maint3-feat-icon">✓</span><span>Actualizaciones de contenido</span></div>
+            <div class="maint3-feat"><span class="maint3-feat-icon">✓</span><span>Soporte técnico ilimitado</span></div>
+          </div>
+          <div class="maint3-feats-row">
+            <div class="maint3-feat"><span class="maint3-feat-icon">✓</span><span>Copias de seguridad diarias</span></div>
+            <div class="maint3-feat"><span class="maint3-feat-icon">✓</span><span>Cambios de fotos y precios hasta 2 veces al mes <em style="color:var(--muted);font-style:italic;font-size:0.72rem">(fotos aportadas por el cliente)</em></span></div>
+          </div>
         </div>
       </div>
       <div class="maint3-right">
@@ -1447,12 +1468,18 @@ footer {
         <div class="maint3-title">Mantenimiento<br><em>sin preocupaciones</em></div>
         <p class="maint3-desc">Olvídate de la tecnología. Nosotros nos encargamos de todo para que tu web funcione siempre perfectamente.</p>
         <div class="maint3-feats">
-          <div class="maint3-feat">Actualizaciones de contenido</div>
-          <div class="maint3-feat">Cambios de fotos y precios hasta 3 veces al mes (Las fotos actualizadas, serán hechas y editadas por visionarios company)</div>
-          <div class="maint3-feat">Soporte técnico ilimitado</div>
-          <div class="maint3-feat">Informe mensual de visitas</div>
-          <div class="maint3-feat">Copias de seguridad diarias</div>
-          <div class="maint3-feat">Añadir productos nuevos</div>
+          <div class="maint3-feats-row">
+            <div class="maint3-feat"><span class="maint3-feat-icon">✓</span><span>Actualizaciones de contenido</span></div>
+            <div class="maint3-feat"><span class="maint3-feat-icon">✓</span><span>Soporte técnico ilimitado</span></div>
+          </div>
+          <div class="maint3-feats-row">
+            <div class="maint3-feat"><span class="maint3-feat-icon">✓</span><span>Copias de seguridad diarias</span></div>
+            <div class="maint3-feat"><span class="maint3-feat-icon">✓</span><span>Informe mensual de visitas</span></div>
+          </div>
+          <div class="maint3-feats-row">
+            <div class="maint3-feat"><span class="maint3-feat-icon">✓</span><span>Añadir productos nuevos</span></div>
+            <div class="maint3-feat"><span class="maint3-feat-icon">✓</span><span>Cambios de fotos y precios hasta 3 veces al mes <em style="color:var(--muted);font-style:italic;font-size:0.72rem">(fotos editadas por Visionarios Company)</em></span></div>
+          </div>
         </div>
       </div>
       <div class="maint3-right">
