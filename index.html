@@ -1078,6 +1078,63 @@ footer {
   .stats-bar { padding: 0; }
 }
 
+/* ─── PORTAFOLIO GALERÍA ─── */
+.pf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 4rem; }
+.pf-card {
+  display: block; text-decoration: none; color: inherit;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 18px;
+  overflow: hidden; position: relative;
+  transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s, border-color .3s;
+}
+.pf-card:hover { transform: translateY(-8px); border-color: var(--violet2); box-shadow: 0 30px 80px rgba(124,58,237,.25); }
+.pf-bar {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .65rem 1rem;
+  background: rgba(124,58,237,.08); border-bottom: 1px solid var(--border);
+}
+.pf-dots { display: flex; gap: .35rem; flex-shrink: 0; }
+.pf-dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+.pf-url {
+  font-size: .62rem; color: var(--muted);
+  background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: .25rem .8rem; flex: 1; text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .5px;
+}
+.pf-frame { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--bg); }
+.pf-frame iframe {
+  width: 333.4%; height: 333.4%;
+  transform: scale(.3); transform-origin: 0 0;
+  border: 0; pointer-events: none; display: block;
+}
+.pf-frame::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,10,24,.55), transparent 35%);
+}
+.pf-live {
+  position: absolute; top: .8rem; right: .8rem; z-index: 2;
+  font-size: .55rem; font-weight: 700; letter-spacing: 2px; color: #fff;
+  background: rgba(6,214,160,.85); padding: .3rem .7rem; border-radius: 100px;
+  display: flex; align-items: center; gap: .35rem;
+}
+.pf-live::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: pulse 1.6s infinite; }
+.pf-body { padding: 1.5rem 1.6rem 1.7rem; }
+.pf-cat {
+  display: inline-block; font-size: .58rem; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; padding: .3rem .9rem; border-radius: 100px;
+  margin-bottom: .8rem; border: 1px solid;
+}
+.pf-title { font-family: 'Syne', sans-serif; font-size: 1.35rem; font-weight: 800; margin-bottom: .45rem; }
+.pf-desc { font-size: .82rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+.pf-link {
+  font-size: .7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--cyan); display: inline-flex; align-items: center; gap: .4rem;
+}
+.pf-card:hover .pf-link { text-decoration: underline; }
+.pf-cta-row { text-align: center; margin-top: 3.5rem; }
+@media (max-width: 900px) {
+  .pf-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
 /* ─── CONTACTO / FORMULARIO DE LEADS ─── */
 .contact-section { padding: 8rem 5rem; max-width: 1100px; margin: 0 auto; }
 .contact-grid3 { display: grid; grid-template-columns: 1fr 1.15fr; gap: 2.5rem; margin-top: 3rem; align-items: start; }
@@ -1298,6 +1355,7 @@ footer {
   </div>
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#portafolio">Portafolio</a></li>
     <li><a href="#proceso">Proceso</a></li>
     <li><a href="#precios">Precios</a></li>
     <li><a href="#faq">FAQ</a></li>
@@ -1313,6 +1371,7 @@ footer {
 <div class="mobile-nav-overlay" id="mobileNavOverlay">
   <ul class="mn-links">
     <li><a href="#servicios" onclick="closeMobileNav()">Servicios</a></li>
+    <li><a href="#portafolio" onclick="closeMobileNav()">Portafolio</a></li>
     <li><a href="#proceso" onclick="closeMobileNav()">Proceso</a></li>
     <li><a href="#precios" onclick="closeMobileNav()">Precios</a></li>
     <li><a href="#faq" onclick="closeMobileNav()">FAQ</a></li>
@@ -1498,6 +1557,104 @@ footer {
       <div class="svc-desc">Aparece en Google y mide cada visita. Datos reales para hacer crecer tu negocio.</div>
       <div class="svc-arrow">→</div>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PORTAFOLIO ═══════════════ -->
+<div class="section" id="portafolio">
+  <div class="eyebrow reveal3">Portafolio</div>
+  <h2 class="section-title reveal3 d1">Webs reales que<br><em>ya están vendiendo</em></h2>
+  <p class="reveal3 d2" style="font-size:.95rem;color:var(--muted);max-width:520px;line-height:1.8;margin-top:-.5rem">No son maquetas: cada tarjeta muestra la web <b style="color:var(--green)">en vivo</b>. Haz clic en cualquiera para visitarla.</p>
+  <div class="pf-grid">
+
+    <a class="pf-card reveal3 d1" href="https://duchasreformas.com/" target="_blank" rel="noopener">
+      <div class="pf-bar">
+        <span class="pf-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span>
+        <span class="pf-url">duchasreformas.com</span>
+      </div>
+      <div class="pf-frame">
+        <span class="pf-live">EN VIVO</span>
+        <iframe src="https://duchasreformas.com/" loading="lazy" title="Vista previa de Duchas & Reformas" tabindex="-1" aria-hidden="true"></iframe>
+      </div>
+      <div class="pf-body">
+        <span class="pf-cat" style="color:var(--gold);border-color:rgba(255,209,102,.4);background:rgba(255,209,102,.08)">Reformas</span>
+        <div class="pf-title">Duchas &amp; Reformas</div>
+        <div class="pf-desc">Reformas de baño de lujo con calculadora de presupuesto online: el cliente sabe su precio al instante, sin esperar llamadas.</div>
+        <span class="pf-link">Ver web en vivo →</span>
+      </div>
+    </a>
+
+    <a class="pf-card reveal3 d2" href="https://www.akipanrestaurante.com/" target="_blank" rel="noopener">
+      <div class="pf-bar">
+        <span class="pf-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span>
+        <span class="pf-url">akipanrestaurante.com</span>
+      </div>
+      <div class="pf-frame">
+        <span class="pf-live">EN VIVO</span>
+        <iframe src="https://www.akipanrestaurante.com/" loading="lazy" title="Vista previa de AKIPAN Restaurante" tabindex="-1" aria-hidden="true"></iframe>
+      </div>
+      <div class="pf-body">
+        <span class="pf-cat" style="color:var(--naranja, #F57C00);border-color:rgba(245,124,0,.4);background:rgba(245,124,0,.08)">Restaurante &amp; Panadería</span>
+        <div class="pf-title">AKIPAN</div>
+        <div class="pf-desc">Cocina ecuatoriana con menú digital de 12 categorías y 64 platos. Diseño cálido que abre el apetito y pedidos directos por WhatsApp.</div>
+        <span class="pf-link">Ver web en vivo →</span>
+      </div>
+    </a>
+
+    <a class="pf-card reveal3 d1" href="https://akipantienda.vercel.app/" target="_blank" rel="noopener">
+      <div class="pf-bar">
+        <span class="pf-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span>
+        <span class="pf-url">mitierramarket · tienda online</span>
+      </div>
+      <div class="pf-frame">
+        <span class="pf-live">EN VIVO</span>
+        <iframe src="https://akipantienda.vercel.app/" loading="lazy" title="Vista previa de Mi Tierra Market" tabindex="-1" aria-hidden="true"></iframe>
+      </div>
+      <div class="pf-body">
+        <span class="pf-cat" style="color:var(--green);border-color:rgba(6,214,160,.4);background:rgba(6,214,160,.08)">Tienda Online</span>
+        <div class="pf-title">Mi Tierra Market</div>
+        <div class="pf-desc">Supermercado latino con catálogo de productos, carrito de compra y pedidos online. Vende las 24 horas sin atender el teléfono.</div>
+        <span class="pf-link">Ver web en vivo →</span>
+      </div>
+    </a>
+
+    <a class="pf-card reveal3 d2" href="https://irraexpress.vercel.app/" target="_blank" rel="noopener">
+      <div class="pf-bar">
+        <span class="pf-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span>
+        <span class="pf-url">irraexpress · restaurante</span>
+      </div>
+      <div class="pf-frame">
+        <span class="pf-live">EN VIVO</span>
+        <iframe src="https://irraexpress.vercel.app/" loading="lazy" title="Vista previa de Irra's Express" tabindex="-1" aria-hidden="true"></iframe>
+      </div>
+      <div class="pf-body">
+        <span class="pf-cat" style="color:var(--cyan);border-color:rgba(0,245,255,.35);background:rgba(0,245,255,.06)">Restaurante</span>
+        <div class="pf-title">Irra's Express</div>
+        <div class="pf-desc">Cocina salvadoreña con menú interactivo, galería de platos y reservas de mesa online. El sabor de casa con presencia digital.</div>
+        <span class="pf-link">Ver web en vivo →</span>
+      </div>
+    </a>
+
+    <a class="pf-card reveal3 d1" href="https://labichota.vercel.app/" target="_blank" rel="noopener">
+      <div class="pf-bar">
+        <span class="pf-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span>
+        <span class="pf-url">labichota · bar &amp; terraza</span>
+      </div>
+      <div class="pf-frame">
+        <span class="pf-live">EN VIVO</span>
+        <iframe src="https://labichota.vercel.app/" loading="lazy" title="Vista previa de La Bichota" tabindex="-1" aria-hidden="true"></iframe>
+      </div>
+      <div class="pf-body">
+        <span class="pf-cat" style="color:var(--violet2);border-color:rgba(159,103,255,.4);background:rgba(124,58,237,.1)">Bar &amp; Terraza</span>
+        <div class="pf-title">La Bichota</div>
+        <div class="pf-desc">Bar y terraza en Santo Domingo con ambiente, carta y reservas. Una web con tanta energía como sus noches.</div>
+        <span class="pf-link">Ver web en vivo →</span>
+      </div>
+    </a>
+
+  </div>
+  <div class="pf-cta-row reveal3">
+    <a href="https://wa.me/34675048731?text=Hola%20%F0%9F%91%8B%20He%20visto%20vuestro%20portafolio%20y%20quiero%20una%20web%20as%C3%AD%20para%20mi%20negocio" class="btn-primary" target="_blank" rel="noopener">🚀 Quiero una web así para mi negocio</a>
   </div>
 </div>
 
