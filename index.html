@@ -30,31 +30,7 @@ body {
   background: var(--bg);
   color: var(--white);
   overflow-x: hidden;
-  cursor: none;
 }
-
-/* ─── CURSOR ─── */
-.cursor-dot {
-  width: 8px; height: 8px;
-  background: var(--cyan);
-  border-radius: 50%;
-  position: fixed; z-index: 9999;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: width .2s, height .2s, background .2s;
-  mix-blend-mode: screen;
-}
-.cursor-ring {
-  width: 40px; height: 40px;
-  border: 1.5px solid var(--violet2);
-  border-radius: 50%;
-  position: fixed; z-index: 9998;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: left .12s ease-out, top .12s ease-out, width .3s, height .3s, border-color .3s;
-}
-body:has(a:hover, button:hover) .cursor-dot { width: 16px; height: 16px; background: var(--violet2); }
-body:has(a:hover, button:hover) .cursor-ring { width: 60px; height: 60px; border-color: var(--cyan); }
 
 /* ─── NAV ─── */
 nav {
@@ -994,8 +970,6 @@ footer {
   .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 1.5rem; width: 100%; }
   .stat-item:last-child { border-bottom: none; }
 
-  body { cursor: auto; }
-  .cursor-dot, .cursor-ring { display: none; }
   .float-card { display: none; }
 
   footer {
@@ -1315,10 +1289,6 @@ footer {
 </style>
 </head>
 <body>
-
-<!-- CURSOR -->
-<div class="cursor-dot" id="dot"></div>
-<div class="cursor-ring" id="ring"></div>
 
 <!-- NAV -->
 <nav>
@@ -1888,18 +1858,6 @@ footer {
 </div>
 
 <script>
-// ─── CURSOR ───
-const dot = document.getElementById('dot');
-const ring = document.getElementById('ring');
-let mx = 0, my = 0;
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  dot.style.left = mx + 'px';
-  dot.style.top = my + 'px';
-  ring.style.left = mx + 'px';
-  ring.style.top = my + 'px';
-});
-
 // ─── PARTICLES ───
 const pCont = document.getElementById('particles');
 for (let i = 0; i < 60; i++) {
