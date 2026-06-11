@@ -1103,6 +1103,215 @@ footer {
   .mobile-nav-overlay .mn-links a { font-size: 1.8rem; padding: 0.5rem 1.5rem; }
   .stats-bar { padding: 0; }
 }
+
+/* ─── CONTACTO / FORMULARIO DE LEADS ─── */
+.contact-section { padding: 8rem 5rem; max-width: 1100px; margin: 0 auto; }
+.contact-grid3 { display: grid; grid-template-columns: 1fr 1.15fr; gap: 2.5rem; margin-top: 3rem; align-items: start; }
+.ci-card {
+  display: flex; gap: 1rem; align-items: center;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 1rem;
+  transition: border-color .3s, transform .3s;
+}
+.ci-card:hover { border-color: var(--violet2); transform: translateY(-3px); }
+.ci-icon { font-size: 1.5rem; flex-shrink: 0; }
+.ci-card b { display: block; font-size: 0.85rem; margin-bottom: 0.1rem; }
+.ci-card span { font-size: 0.74rem; color: var(--muted); word-break: break-word; line-height: 1.5; }
+.lead-form3 {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 2.5rem;
+  display: grid; gap: 1.1rem;
+  position: relative; overflow: hidden;
+}
+.lead-form3::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+}
+.lf-field label {
+  display: block; font-size: 0.62rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem;
+}
+.lf-field input, .lf-field select, .lf-field textarea {
+  width: 100%; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.85rem 1rem; color: var(--white);
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;
+  transition: border-color .3s, box-shadow .3s;
+}
+.lf-field input:focus, .lf-field select:focus, .lf-field textarea:focus {
+  border-color: var(--violet2); outline: none;
+  box-shadow: 0 0 18px rgba(124,58,237,0.25);
+}
+.lf-field select option { background: var(--bg2); }
+.lf-ok {
+  display: none;
+  background: rgba(6,214,160,0.1); border: 1px solid rgba(6,214,160,0.3);
+  color: var(--green); border-radius: 10px;
+  padding: 0.9rem 1.1rem; font-size: 0.8rem; line-height: 1.6;
+}
+
+/* ─── WHATSAPP FLOAT ─── */
+.wsp-float3 {
+  position: fixed; bottom: 22px; left: 22px; z-index: 1200;
+  width: 58px; height: 58px; border-radius: 50%;
+  background: #25D366;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 30px rgba(37,211,102,0.45);
+  transition: transform .2s; text-decoration: none;
+  font-size: 1.9rem; line-height: 1;
+}
+.wsp-float3:hover { transform: scale(1.1); }
+.wsp-float3 svg { width: 32px; height: 32px; fill: #fff; }
+
+/* ─── CHATBOT VISIO ─── */
+.chat-fab3 {
+  position: fixed; bottom: 22px; right: 22px; z-index: 1300;
+  display: flex; align-items: center; gap: 0.6rem;
+  background: linear-gradient(135deg, var(--violet), var(--violet2));
+  color: #fff; font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 1px;
+  padding: 0.95rem 1.4rem; border-radius: 100px; border: none; cursor: pointer;
+  box-shadow: 0 12px 34px rgba(124,58,237,0.55);
+  transition: transform .2s, box-shadow .2s;
+}
+.chat-fab3:hover { transform: translateY(-3px); box-shadow: 0 16px 44px rgba(124,58,237,0.75); }
+.chat-fab3 .fab-dot3 {
+  position: absolute; top: -2px; right: 0;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--green); border: 2.5px solid var(--bg);
+  animation: pulse 2s infinite;
+}
+.chat-panel3 {
+  position: fixed; bottom: 22px; right: 22px; z-index: 1300;
+  width: min(380px, calc(100vw - 24px));
+  height: min(560px, calc(100vh - 100px));
+  background: var(--bg2); border: 1px solid var(--violet);
+  border-radius: 20px; display: none; flex-direction: column; overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 50px rgba(124,58,237,0.25);
+}
+.chat-panel3.open { display: flex; animation: chatIn3 .3s ease; }
+@keyframes chatIn3 { from { opacity: 0; transform: translateY(20px) scale(.97); } to { opacity: 1; transform: none; } }
+.chat-head3 {
+  background: linear-gradient(135deg, var(--violet), var(--violet2));
+  padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem;
+}
+.chat-av3 {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+}
+.chat-head3 b { color: #fff; font-size: 0.88rem; display: block; line-height: 1.3; }
+.chat-status3 { color: rgba(255,255,255,0.85); font-size: 0.68rem; display: flex; align-items: center; gap: 0.4rem; }
+.chat-status3::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #5BF295; }
+.chat-close3 {
+  margin-left: auto; color: #fff; opacity: 0.85; background: none; border: none;
+  font-size: 1.3rem; line-height: 1; cursor: pointer;
+  width: 34px; height: 34px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.chat-close3:hover { opacity: 1; background: rgba(255,255,255,0.12); }
+.chat-body3 {
+  flex: 1; overflow-y: auto; padding: 1.2rem 1rem;
+  display: flex; flex-direction: column; gap: 0.7rem;
+}
+.msg3 {
+  max-width: 85%; padding: 0.75rem 1rem; border-radius: 14px;
+  font-size: 0.82rem; line-height: 1.6; animation: chatIn3 .3s ease;
+}
+.msg3.bot { background: var(--bg); border: 1px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
+.msg3.user {
+  background: linear-gradient(135deg, var(--violet), var(--violet2));
+  color: #fff; border-bottom-right-radius: 4px; align-self: flex-end;
+}
+.msg3 b { color: var(--cyan); }
+.msg3.user b { color: #fff; }
+.chips3 { display: flex; flex-wrap: wrap; gap: 0.45rem; align-self: flex-start; max-width: 95%; }
+.chip3 {
+  background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.5);
+  color: var(--violet2); font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.74rem; font-weight: 600;
+  padding: 0.55rem 0.95rem; border-radius: 100px;
+  transition: background .2s, color .2s; cursor: pointer;
+}
+.chip3:hover { background: rgba(124,58,237,0.3); color: #fff; }
+.chip3.wsp { border-color: rgba(6,214,160,0.5); color: var(--green); background: rgba(6,214,160,0.08); }
+.chip3.wsp:hover { background: rgba(6,214,160,0.2); color: #fff; }
+.chat-input3 { display: flex; gap: 0.6rem; padding: 0.8rem; border-top: 1px solid var(--border); }
+.chat-input3 input {
+  flex: 1; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.7rem 0.95rem; color: var(--white);
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem;
+}
+.chat-input3 input:focus { border-color: var(--violet2); outline: none; }
+.chat-send3 {
+  width: 42px; height: 42px; border-radius: 10px; border: none; cursor: pointer;
+  background: linear-gradient(135deg, var(--violet), var(--violet2));
+  color: #fff; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.typing3 {
+  display: flex; gap: 4px; padding: 0.85rem 1.1rem;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 14px; border-bottom-left-radius: 4px;
+  align-self: flex-start; width: fit-content;
+}
+.typing3 i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: ty3 1.2s infinite; }
+.typing3 i:nth-child(2) { animation-delay: .15s; } .typing3 i:nth-child(3) { animation-delay: .3s; }
+@keyframes ty3 { 0%,60%,100% { transform: none; opacity: .4; } 30% { transform: translateY(-5px); opacity: 1; } }
+
+/* ─── EXIT MODAL (AVISO PROMO) ─── */
+.modal-bg3 {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(5,5,10,0.82);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-bg3.open { display: flex; animation: chatIn3 .3s ease; }
+.modal3 {
+  background: var(--bg2); border: 1px solid var(--violet);
+  border-radius: 22px; padding: 3rem 2.5rem;
+  max-width: 460px; width: 100%; text-align: center; position: relative;
+  box-shadow: 0 0 80px rgba(124,58,237,0.35);
+}
+.modal3 .mx3 {
+  position: absolute; top: 12px; right: 12px;
+  background: none; border: none; color: var(--muted);
+  font-size: 1.4rem; cursor: pointer;
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal3 .mx3:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+.modal3-tag {
+  display: inline-block; font-size: 0.6rem; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--cyan);
+  background: rgba(0,245,255,0.08); border: 1px solid rgba(0,245,255,0.25);
+  padding: 0.4rem 1.1rem; border-radius: 100px; margin-bottom: 1.2rem;
+}
+.modal3-offer {
+  font-family: 'Bebas Neue', sans-serif; font-size: 4rem; line-height: 1;
+  background: linear-gradient(135deg, var(--gold), var(--violet2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 0.6rem;
+}
+.modal3 h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.8rem; }
+.modal3 p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.8rem; }
+.modal3 .code3 { color: var(--cyan); font-weight: 700; }
+
+@media (max-width: 900px) {
+  .contact-section { padding: 5rem 2rem; }
+  .contact-grid3 { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .contact-section { padding: 4rem 1.25rem; }
+  .lead-form3 { padding: 1.75rem 1.25rem; }
+  .chat-fab3 { padding: 0.85rem 1.2rem; font-size: 0.72rem; }
+  .wsp-float3 { width: 52px; height: 52px; bottom: 18px; left: 18px; }
+  .modal3 { padding: 2.2rem 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .msg3, .chat-panel3.open, .modal-bg3.open { animation: none; }
+}
 </style>
 </head>
 <body>
@@ -1122,6 +1331,7 @@ footer {
     <li><a href="#proceso">Proceso</a></li>
     <li><a href="#precios">Precios</a></li>
     <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="https://wa.me/34675048731" class="nav-cta" target="_blank">Contactar →</a>
   <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Abrir menú">
@@ -1136,6 +1346,7 @@ footer {
     <li><a href="#proceso" onclick="closeMobileNav()">Proceso</a></li>
     <li><a href="#precios" onclick="closeMobileNav()">Precios</a></li>
     <li><a href="#faq" onclick="closeMobileNav()">FAQ</a></li>
+    <li><a href="#contacto" onclick="closeMobileNav()">Contacto</a></li>
   </ul>
   <a href="https://wa.me/34675048731" class="nav-cta mn-cta" target="_blank" onclick="closeMobileNav()">Contactar →</a>
 </div>
@@ -1564,6 +1775,57 @@ footer {
   </div>
 </div>
 
+<!-- ═══════════════ CONTACTO / LEADS ═══════════════ -->
+<div class="contact-section" id="contacto">
+  <div class="eyebrow reveal3">Contacto</div>
+  <h2 class="section-title reveal3 d1">Cuéntanos tu proyecto.<br><em>Te respondemos hoy.</em></h2>
+  <div class="contact-grid3">
+    <div class="reveal3 d2">
+      <div class="ci-card">
+        <span class="ci-icon">📱</span>
+        <div><b>WhatsApp directo</b><span>+34 675 048 731 · Respuesta inmediata</span></div>
+      </div>
+      <div class="ci-card">
+        <span class="ci-icon">🤖</span>
+        <div><b>Asistente Visio 24/7</b><span>Nuestro chatbot te atiende y cotiza a cualquier hora, incluso de madrugada</span></div>
+      </div>
+      <div class="ci-card">
+        <span class="ci-icon">📧</span>
+        <div><b>Correo</b><span>jeffersonbrizjah998@gmail.com</span></div>
+      </div>
+      <div class="ci-card">
+        <span class="ci-icon">🌐</span>
+        <div><b>Web</b><span>losvisionarioscompany.com</span></div>
+      </div>
+    </div>
+    <form class="lead-form3 reveal3 d3" id="leadForm3">
+      <div class="lf-field">
+        <label for="lfName">Nombre</label>
+        <input type="text" id="lfName" name="nombre" required placeholder="Tu nombre" autocomplete="name">
+      </div>
+      <div class="lf-field">
+        <label for="lfPhone">WhatsApp / Teléfono</label>
+        <input type="tel" id="lfPhone" name="telefono" required placeholder="675 048 731" autocomplete="tel">
+      </div>
+      <div class="lf-field">
+        <label for="lfType">¿Qué necesitas?</label>
+        <select id="lfType" name="tipo">
+          <option>Web Profesional (€449)</option>
+          <option>Web Premium + Tienda (€699)</option>
+          <option>Mantenimiento mensual</option>
+          <option>Aún no lo sé</option>
+        </select>
+      </div>
+      <div class="lf-field">
+        <label for="lfMsg">Cuéntanos sobre tu negocio</label>
+        <textarea id="lfMsg" name="mensaje" rows="3" placeholder="Ej: Tengo un restaurante y quiero recibir reservas online…"></textarea>
+      </div>
+      <button type="submit" class="btn-primary" id="lfSubmit" style="width:100%">Solicitar propuesta gratis →</button>
+      <div class="lf-ok" id="lfOk">✅ ¡Recibido! Te contactaremos hoy mismo. Si quieres respuesta inmediata, te abrimos WhatsApp en un segundo…</div>
+    </form>
+  </div>
+</div>
+
 <!-- ═══════════════ FINAL CTA ═══════════════ -->
 <div class="final-cta3">
   <div class="final-cta3-bg"></div>
@@ -1585,6 +1847,45 @@ footer {
     <a href="https://wa.me/34675048731" target="_blank">Contacto</a>
   </div>
 </footer>
+
+<!-- ═══════════════ WHATSAPP FLOAT ═══════════════ -->
+<a href="https://wa.me/34675048731?text=Hola%20%F0%9F%91%8B%20Vengo%20de%20losvisionarioscompany.com%20y%20quiero%20informaci%C3%B3n" class="wsp-float3" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<!-- ═══════════════ CHATBOT VISIO ═══════════════ -->
+<button type="button" class="chat-fab3" id="chatFab3" aria-label="Abrir asistente de ventas">
+  💬 ¿Te ayudo?
+  <span class="fab-dot3" aria-hidden="true"></span>
+</button>
+
+<div class="chat-panel3" id="chatPanel3" role="dialog" aria-label="Asistente virtual Visio">
+  <div class="chat-head3">
+    <div class="chat-av3">🤖</div>
+    <div>
+      <b>Visio — Asistente de Visionarios</b>
+      <span class="chat-status3">En línea · responde al instante</span>
+    </div>
+    <button type="button" class="chat-close3" id="chatClose3" aria-label="Cerrar chat">✕</button>
+  </div>
+  <div class="chat-body3" id="chatBody3"></div>
+  <div class="chat-input3">
+    <input type="text" id="chatText3" placeholder="Escribe tu mensaje…" aria-label="Escribe tu mensaje">
+    <button type="button" class="chat-send3" id="chatSend3" aria-label="Enviar mensaje">➤</button>
+  </div>
+</div>
+
+<!-- ═══════════════ AVISO PROMO (EXIT INTENT) ═══════════════ -->
+<div class="modal-bg3" id="exitModal3" role="dialog" aria-modal="true" aria-label="Oferta especial">
+  <div class="modal3">
+    <button type="button" class="mx3" id="exitClose3" aria-label="Cerrar">✕</button>
+    <span class="modal3-tag">⏳ Antes de irte…</span>
+    <div class="modal3-offer">-10% HOY</div>
+    <h3>Llévate tu web con descuento</h3>
+    <p>Escríbenos ahora mencionando el código <span class="code3">VISION10</span> y obtén un <b>10% de descuento</b> en cualquier plan. Válido solo hoy.</p>
+    <a href="https://wa.me/34675048731?text=Hola%20%F0%9F%91%8B%20Quiero%20mi%2010%25%20de%20descuento%20con%20el%20c%C3%B3digo%20VISION10" class="btn-primary" target="_blank" rel="noopener" style="display:block;text-align:center">🎁 Reclamar mi descuento</a>
+  </div>
+</div>
 
 <script>
 // ─── CURSOR ───
@@ -1709,6 +2010,244 @@ window.addEventListener('scroll', () => {
     grid.style.transform = `rotateX(60deg) translateY(${30 - sy * 0.03}%) scaleX(2)`;
   }
 }, { passive: true });
+
+/* ════════════════════════════════════════════════════════════
+   ⚙️ SISTEMA DE VENTAS 24/7 — CONFIGURACIÓN
+   ════════════════════════════════════════════════════════════ */
+const LV_CONFIG = {
+  whatsapp: "34675048731",
+  email: "jeffersonbrizjah998@gmail.com",
+  empresa: "Visionarios Company"
+};
+
+function lvWsp(msg) {
+  return "https://wa.me/" + LV_CONFIG.whatsapp + "?text=" + encodeURIComponent(msg);
+}
+
+/* Envío de leads al correo (formsubmit.co, sin backend) + copia local */
+function lvSendLead(data) {
+  try {
+    const leads = JSON.parse(localStorage.getItem("lv_leads") || "[]");
+    leads.push({ ...data, fecha: new Date().toISOString() });
+    localStorage.setItem("lv_leads", JSON.stringify(leads));
+  } catch (_) {}
+  return fetch("https://formsubmit.co/ajax/" + LV_CONFIG.email, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({ _subject: "🔥 Nuevo lead — " + LV_CONFIG.empresa, ...data })
+  }).catch(() => {});
+}
+
+/* ─── FORMULARIO DE CONTACTO ─── */
+const lvForm = document.getElementById('leadForm3');
+lvForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = document.getElementById('lfSubmit');
+  btn.disabled = true; btn.textContent = "Enviando…";
+  const nombre = document.getElementById('lfName').value;
+  const tipo = document.getElementById('lfType').value;
+  lvSendLead({
+    origen: "Formulario web",
+    nombre,
+    telefono: document.getElementById('lfPhone').value,
+    interes: tipo,
+    mensaje: document.getElementById('lfMsg').value || "(sin mensaje)"
+  }).finally(() => {
+    btn.textContent = "✅ Enviado";
+    document.getElementById('lfOk').style.display = "block";
+    setTimeout(() => {
+      window.open(lvWsp("Hola 👋 Soy " + nombre + ", acabo de dejar mis datos en losvisionarioscompany.com. Me interesa: " + tipo), "_blank");
+    }, 900);
+  });
+});
+
+/* ─── CHATBOT VISIO (árbol de decisión, 24/7) ─── */
+const lvChat = { open: false, lead: {}, step: null };
+const lvBody = document.getElementById('chatBody3');
+
+function lvBotSay(html, delay = 700) {
+  return new Promise(res => {
+    const t = document.createElement('div');
+    t.className = 'typing3'; t.innerHTML = '<i></i><i></i><i></i>';
+    lvBody.appendChild(t); lvBody.scrollTop = lvBody.scrollHeight;
+    setTimeout(() => {
+      t.remove();
+      const m = document.createElement('div');
+      m.className = 'msg3 bot'; m.innerHTML = html;
+      lvBody.appendChild(m); lvBody.scrollTop = lvBody.scrollHeight;
+      res();
+    }, delay);
+  });
+}
+function lvUserSay(text) {
+  const m = document.createElement('div');
+  m.className = 'msg3 user'; m.textContent = text;
+  lvBody.appendChild(m); lvBody.scrollTop = lvBody.scrollHeight;
+}
+function lvChips(opts) {
+  lvRemoveChips();
+  const c = document.createElement('div');
+  c.className = 'chips3'; c.id = 'lvChips';
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip3' + (o.wsp ? ' wsp' : '');
+    b.textContent = o.label;
+    b.addEventListener('click', () => { lvRemoveChips(); lvUserSay(o.label); o.action(); });
+    c.appendChild(b);
+  });
+  lvBody.appendChild(c); lvBody.scrollTop = lvBody.scrollHeight;
+}
+function lvRemoveChips() { const c = document.getElementById('lvChips'); if (c) c.remove(); }
+
+async function lvBotStart() {
+  await lvBotSay("¡Hola! 👋 Soy <b>Visio</b>, el asistente de <b>Visionarios Company</b>.");
+  await lvBotSay("Estoy aquí 24/7 para ayudarte a conseguir la web perfecta para tu negocio. ¿Qué te gustaría hacer?");
+  lvMainMenu();
+}
+function lvMainMenu() {
+  lvChips([
+    { label: "💻 Quiero una página web", action: lvFlowWeb },
+    { label: "💰 ¿Cuánto cuesta?", action: lvFlowPrice },
+    { label: "🔧 Mantenimiento mensual", action: lvFlowMaint },
+    { label: "👤 Hablar con una persona", action: lvFlowHuman }
+  ]);
+}
+async function lvFlowWeb() {
+  await lvBotSay("¡Excelente decisión! 🚀 ¿Qué plan encaja mejor contigo?");
+  lvChips([
+    { label: "⭐ Profesional — €449", action: () => lvFlowType("Plan Profesional", "€449", "7 días") },
+    { label: "🛒 Premium + Tienda — €699", action: () => lvFlowType("Plan Premium con tienda online", "€699", "10 días") },
+    { label: "🤔 No estoy seguro", action: lvFlowUnsure }
+  ]);
+}
+async function lvFlowUnsure() {
+  await lvBotSay("Sin problema 😊 Te lo resumo:<br><br>⭐ <b>Profesional (€449)</b> — web completa + sesión de fotos. Ideal para restaurantes, clínicas, servicios…<br><br>🛒 <b>Premium (€699)</b> — todo lo anterior + tienda online con carrito y pagos. Ideal si quieres vender productos.");
+  await lvBotSay("¿Con cuál te animas?");
+  lvChips([
+    { label: "⭐ Profesional — €449", action: () => lvFlowType("Plan Profesional", "€449", "7 días") },
+    { label: "🛒 Premium — €699", action: () => lvFlowType("Plan Premium con tienda online", "€699", "10 días") },
+    { label: "👤 Mejor hablar con alguien", action: lvFlowHuman }
+  ]);
+}
+async function lvFlowType(plan, precio, entrega) {
+  lvChat.lead.interes = plan;
+  await lvBotSay("Perfecto: <b>" + plan + "</b> ✅<br>💰 Inversión: <b>" + precio + "</b> (pago único, 50% al inicio y 50% al entregar)<br>⏱️ Entrega: <b>" + entrega + "</b>");
+  await lvBotSay("Y si reservas hoy con el código <b>VISION10</b>, tienes un <b>10% de descuento</b> 🎁<br>¿Cómo te llamas?");
+  lvChat.step = "name";
+  document.getElementById('chatText3').focus();
+}
+async function lvFlowName(name) {
+  lvChat.lead.nombre = name;
+  await lvBotSay("¡Mucho gusto, <b>" + name + "</b>! 😊<br>Déjame tu número de WhatsApp y te enviamos la propuesta con tu descuento reservado.");
+  lvChat.step = "phone";
+}
+async function lvFlowPhone(phone) {
+  lvChat.lead.telefono = phone;
+  lvChat.step = null;
+  lvSendLead({ origen: "Chatbot Visio", ...lvChat.lead });
+  await lvBotSay("¡Listo, " + (lvChat.lead.nombre || "") + "! 🎉 Tus datos quedaron registrados y <b>tu 10% de descuento está reservado</b>.");
+  await lvBotSay("Para cerrar tu proyecto hoy mismo, continúa por WhatsApp (es 1 clic):");
+  lvChips([
+    { label: "📲 Continuar por WhatsApp", wsp: true, action: () => {
+      window.open(lvWsp("Hola 👋 Soy " + (lvChat.lead.nombre || "") + ". Hablé con Visio en losvisionarioscompany.com y quiero el " + (lvChat.lead.interes || "plan") + " con el código VISION10 🎁"), "_blank");
+      lvThanks();
+    }},
+    { label: "Volver al menú", action: lvMainMenu }
+  ]);
+}
+async function lvThanks() {
+  await lvBotSay("¡Gracias! Nuestro equipo te escribirá muy pronto. ¿Algo más en lo que te ayude? 😊");
+  lvMainMenu();
+}
+async function lvFlowPrice() {
+  await lvBotSay("Estos son nuestros precios (pago único, sin sorpresas):<br><br>⭐ <b>Plan Profesional</b> — desde €449<br>Web completa + sesión de fotos + hosting<br><br>🛒 <b>Plan Premium</b> — desde €699<br>Todo lo anterior + tienda online completa<br><br>🔧 <b>Mantenimiento</b> — €49 o €89/mes (opcional)");
+  await lvBotSay("Pagas 50% al inicio y 50% cuando tu web esté lista y aprobada. ¿Quieres empezar?");
+  lvChips([
+    { label: "Sí, quiero mi web", action: lvFlowWeb },
+    { label: "Ver planes completos", action: () => { lvCloseChat(); location.hash = "#precios"; } },
+    { label: "Volver al menú", action: lvMainMenu }
+  ]);
+}
+async function lvFlowMaint() {
+  await lvBotSay("Tenemos 2 opciones de mantenimiento mensual:<br><br>✅ <b>Estándar — €49/mes</b><br>Actualizaciones, soporte ilimitado, copias de seguridad y hasta 2 cambios al mes<br><br>🚀 <b>Premium — €89/mes</b><br>Todo lo anterior + informe de visitas, productos nuevos y hasta 3 cambios al mes con fotos editadas por nosotros");
+  await lvBotSay("Cancelas cuando quieras, sin permanencia. ¿Te interesa?");
+  lvChips([
+    { label: "📲 Sí, contratarlo", wsp: true, action: () => {
+      window.open(lvWsp("Hola 👋 Me interesa el mantenimiento mensual de mi web."), "_blank");
+      lvThanks();
+    }},
+    { label: "Volver al menú", action: lvMainMenu }
+  ]);
+}
+async function lvFlowHuman() {
+  await lvBotSay("¡Claro! Te conecto directamente con nuestro equipo por WhatsApp. Respondemos rapidísimo 😉");
+  lvChips([
+    { label: "📲 Abrir WhatsApp", wsp: true, action: () => {
+      window.open(lvWsp("Hola 👋 Vengo del chat de losvisionarioscompany.com y quiero hablar con una persona."), "_blank");
+      lvThanks();
+    }},
+    { label: "Volver al menú", action: lvMainMenu }
+  ]);
+}
+function lvHandleFree(text) {
+  const t = text.toLowerCase();
+  if (lvChat.step === "name") return lvFlowName(text);
+  if (lvChat.step === "phone") return lvFlowPhone(text);
+  if (/(precio|cuesta|costo|cuanto|cuánto|tarifa|barato)/.test(t)) return lvFlowPrice();
+  if (/(mantenimiento|mensual|soporte)/.test(t)) return lvFlowMaint();
+  if (/(web|página|pagina|tienda|landing|necesito|quiero)/.test(t)) return lvFlowWeb();
+  if (/(humano|persona|asesor|llamar|whatsapp|telefono|teléfono)/.test(t)) return lvFlowHuman();
+  if (/(hola|buenas|hey|hi)/.test(t)) return lvBotSay("¡Hola! 😊 ¿En qué te ayudo hoy?").then(lvMainMenu);
+  if (/(gracias|genial|ok|vale|perfecto)/.test(t)) return lvBotSay("¡Con gusto! 🙌 ¿Algo más?").then(lvMainMenu);
+  return lvBotSay("Te entiendo. Para darte la mejor respuesta, elige una opción 👇").then(lvMainMenu);
+}
+document.getElementById('chatSend3').addEventListener('click', lvSendFromInput);
+document.getElementById('chatText3').addEventListener('keydown', e => { if (e.key === "Enter") lvSendFromInput(); });
+function lvSendFromInput() {
+  const inp = document.getElementById('chatText3');
+  const v = inp.value.trim();
+  if (!v) return;
+  inp.value = "";
+  lvRemoveChips();
+  lvUserSay(v);
+  lvHandleFree(v);
+}
+const lvFab = document.getElementById('chatFab3'), lvPanel = document.getElementById('chatPanel3');
+lvFab.addEventListener('click', () => {
+  lvPanel.classList.add('open');
+  lvFab.style.display = 'none';
+  if (!lvChat.open) { lvChat.open = true; lvBotStart(); }
+});
+function lvCloseChat() { lvPanel.classList.remove('open'); lvFab.style.display = 'flex'; }
+document.getElementById('chatClose3').addEventListener('click', lvCloseChat);
+
+/* Auto-abrir el chat a los 18s (1 vez por sesión) */
+setTimeout(() => {
+  if (!lvChat.open && !sessionStorage.getItem('lv_chat_auto')) {
+    sessionStorage.setItem('lv_chat_auto', '1');
+    lvFab.click();
+  }
+}, 18000);
+
+/* ─── AVISO PROMO (EXIT INTENT, 1 vez por sesión) ─── */
+const lvExit = document.getElementById('exitModal3');
+function lvShowExit() {
+  if (sessionStorage.getItem('lv_exit')) return;
+  sessionStorage.setItem('lv_exit', '1');
+  lvExit.classList.add('open');
+}
+document.addEventListener('mouseout', e => {
+  if (e.clientY <= 0 && !e.relatedTarget) lvShowExit();
+});
+let lvLastY = 0;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (lvLastY - y > 600 && y < 400) lvShowExit();
+  lvLastY = y;
+}, { passive: true });
+document.getElementById('exitClose3').addEventListener('click', () => lvExit.classList.remove('open'));
+lvExit.addEventListener('click', e => { if (e.target === lvExit) lvExit.classList.remove('open'); });
 </script>
 </body>
 </html>
