@@ -2089,7 +2089,9 @@ window.addEventListener('scroll', () => {
 const LV_CONFIG = {
   whatsapp: "34675048731",
   email: "jeffersonbrizjah998@gmail.com",
-  empresa: "Visionarios Company"
+  empresa: "Visionarios Company",
+  /* URL del webhook de n8n (automatización 24/7). Vacío = desactivado */
+  n8nWebhook: ""
 };
 
 function lvWsp(msg) {
@@ -2103,6 +2105,14 @@ function lvSendLead(data) {
     leads.push({ ...data, fecha: new Date().toISOString() });
     localStorage.setItem("lv_leads", JSON.stringify(leads));
   } catch (_) {}
+  if (LV_CONFIG.n8nWebhook) {
+    fetch(LV_CONFIG.n8nWebhook, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...data, fecha: new Date().toISOString(), web: location.hostname }),
+      keepalive: true
+    }).catch(() => {});
+  }
   return fetch("https://formsubmit.co/ajax/" + LV_CONFIG.email, {
     method: "POST",
     headers: { "Content-Type": "application/json", "Accept": "application/json" },
