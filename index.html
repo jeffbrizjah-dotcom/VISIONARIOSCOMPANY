@@ -2090,8 +2090,8 @@ const LV_CONFIG = {
   whatsapp: "34675048731",
   email: "jeffersonbrizjah998@gmail.com",
   empresa: "Visionarios Company",
-  /* URL del webhook de n8n (automatización 24/7). Vacío = desactivado */
-  n8nWebhook: ""
+  /* Webhook de avisos 24/7 (función Vercel /api/lead → WhatsApp). Vacío = desactivado */
+  n8nWebhook: "/api/lead"
 };
 
 function lvWsp(msg) {
